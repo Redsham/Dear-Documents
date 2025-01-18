@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Specializations Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Specializations
+  m_TableCollectionNameGuidString: e0c1652f7afffea429eedcb0b4995ff9
+  m_Entries:
+  - m_Id: 4570734592
+    m_Key: engineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24699199488
+    m_Key: doctor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37835759616
+    m_Key: teacher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49554644992
+    m_Key: scientist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80185647104
+    m_Key: artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 110657265664
+    m_Key: programmer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131909804032
+    m_Key: manager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144761151488
+    m_Key: salesman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 160288464896
+    m_Key: security_guard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 193314414592
+    m_Key: police_officer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231889428480
+    m_Key: firefighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252131139584
+    m_Key: soldier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 260955955200
+    m_Key: pilot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 290941034496
+    m_Key: miner
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1133822271913984081
+  references:
+    version: 2
+    RefIds:
+    - rid: 1133822271913984081
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1737068144532
