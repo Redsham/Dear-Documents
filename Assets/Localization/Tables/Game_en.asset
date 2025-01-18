@@ -31,19 +31,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1063174840246272
-    m_Localized: Date of birth
+    m_Localized: DOB.
     m_Metadata:
       m_Items: []
   - m_Id: 1063305060802560
-    m_Localized: Date of expiry
+    m_Localized: EXP.
     m_Metadata:
       m_Items: []
   - m_Id: 1063450527653888
-    m_Localized: Place of issue
+    m_Localized: ISS.
     m_Metadata:
       m_Items: []
   - m_Id: 1106863641845760
     m_Localized: Specialization
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1817390806458368
+    m_Localized: Ministry of labor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1817667215286272
+    m_Localized: Work Pass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1831686491856896
+    m_Localized: SEX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833391652593664
+    m_Localized: M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833419318222848
+    m_Localized: F
     m_Metadata:
       m_Items: []
   references:

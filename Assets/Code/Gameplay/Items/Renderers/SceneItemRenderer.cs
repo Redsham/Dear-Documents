@@ -106,7 +106,7 @@ namespace Gameplay.Items.Renderers
                 m_MotionHandle.Complete();
             
             float angle = Random.Range(-15.0f, 15.0f);
-            Vector2 offset = new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-2.0f, -1.0f));
+            Vector2 offset = new(Random.Range(-0.1f, 0.1f), Random.Range(-2.0f, -1.0f));
             m_OriginPosition = startPosition;
             
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.1f)

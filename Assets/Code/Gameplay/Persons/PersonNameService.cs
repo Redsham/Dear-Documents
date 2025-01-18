@@ -16,6 +16,7 @@ namespace Gameplay.Persons
             "Anderson", "Brown", "Davis", "Garcia", "Gonzalez", "Hernandez", "Jackson", "Johnson", "Jones", "Lopez", "Martin", "Martinez", "Miller", "Moore", "Rodriguez", "Smith", "Taylor", "Thomas", "Williams", "Wilson"
         };
         
+        
         public PersonName GetRandomName(PersonGender gender)
         {
             return new PersonName()

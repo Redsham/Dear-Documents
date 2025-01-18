@@ -43,6 +43,26 @@ MonoBehaviour:
     m_Key: specialization
     m_Metadata:
       m_Items: []
+  - m_Id: 1817390806458368
+    m_Key: work_pass_subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1817667215286272
+    m_Key: work_pass_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1831686491856896
+    m_Key: sex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833391652593664
+    m_Key: gender_male
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833419318222848
+    m_Key: gender_female
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
