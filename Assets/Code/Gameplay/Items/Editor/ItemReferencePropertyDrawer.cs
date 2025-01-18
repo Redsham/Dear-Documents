@@ -7,9 +7,10 @@ using UnityEngine;
 
 namespace Code.Gameplay.Items.Editor
 {
-    [CustomPropertyDrawer(typeof(ItemReference))]
-    public sealed class ParentReferencePropertyDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(ItemBehaviourReference))]
+    public sealed class ItemBehaviourReferencePropertyDrawer : PropertyDrawer
     {
+        private static string GetLabel(Type type) => $"{type.Namespace}/{type.Name}";
         private static string[] GetAllTypeNames()
         {
             return new List<string> { "None" }
@@ -18,47 +19,41 @@ namespace Code.Gameplay.Items.Editor
                                     .Select(type => type.FullName))
                    .ToArray();
         }
-
-        private static string GetLabel(Type type) => $"{type.Namespace}/{type.Name}";
-        private string[] m_Names;
+        
+        
+        private string[] m_Types;
 
         public override void OnGUI(Rect rect, SerializedProperty prop, GUIContent label)
         {
-            if (m_Names == null)
+            if (m_Types == null)
             {
-                m_Names = GetAllTypeNames();
+                m_Types = GetAllTypeNames();
                 if (prop.serializedObject.targetObject is ItemBehaviour item)
                 {
                     var itemName = item.GetType().FullName;
-                    m_Names = m_Names.Where(name => name != itemName).ToArray();
+                    m_Types = m_Types.Where(name => name != itemName).ToArray();
                 }
             }
 
-            var typeNameProp = prop.FindPropertyRelative("TypeName");
+            SerializedProperty typeNameProp = prop.FindPropertyRelative("TypeName");
 
             using (new EditorGUI.PropertyScope(rect, label, prop))
             {
-                var labelRect = new Rect(rect.x, rect.y, rect.width, 18f);
-                var popupRect = new Rect(rect.x, rect.y + labelRect.height, rect.width, 18f);
+                Rect labelRect = new(rect.x, rect.y, rect.width, 18f);
+                Rect popupRect = new(rect.x, rect.y + labelRect.height, rect.width, 18f);
 
-                var index            = Array.IndexOf(m_Names, typeNameProp.stringValue);
+                int index            = Array.IndexOf(m_Types, typeNameProp.stringValue);
                 if (index < 0) index = 0;
 
                 EditorGUI.LabelField(labelRect, "Item");
-                using (var check = new EditorGUI.ChangeCheckScope())
+                using (EditorGUI.ChangeCheckScope check = new())
                 {
-                    index = EditorGUI.Popup(popupRect, index, m_Names);
+                    index = EditorGUI.Popup(popupRect, index, m_Types);
                     if (check.changed)
-                    {
-                        typeNameProp.stringValue = m_Names[index];
-                    }
+                        typeNameProp.stringValue = m_Types[index];
                 }
             }
         }
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return 18f + 18f + 4f;
-        }
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => 18f + 18f + 4f;
     }
 }

@@ -10,10 +10,13 @@ namespace DI
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            // Registering items services
             builder.RegisterComponentInHierarchy<ItemsManager>();
             builder.RegisterComponentInHierarchy<ItemsMover>();
+            builder.RegisterComponentInHierarchy<TableContainer>();
             builder.RegisterComponentInHierarchy<ItemsDropper>();
             
+            // Registering person services
             builder.Register<IDocumentBuilder,      DocumentBuilder>(Lifetime.Singleton);
             builder.Register<IInconsistencyBuilder, InconsistencyBuilder>(Lifetime.Singleton);
             builder.Register<IReasonOfEntryBuilder, ReasonOfEntryBuilder>(Lifetime.Singleton);

@@ -11,22 +11,16 @@ namespace Gameplay.Items
         public bool         IsOnTable { get; private set; }
         public ItemRenderer Renderer  => IsOnTable ? TableRenderer : SceneRenderer;
         
-        protected ItemsManager ItemsManager { get; private set; }
-        
-        protected SceneItemRenderer SceneRenderer { get; private set; }
-        protected TableItemRenderer TableRenderer { get; private set; }
-        
+        public SceneItemRenderer SceneRenderer { get; private set; }
+        public TableItemRenderer TableRenderer { get; private set; }
         
         [Inject]
-        public void Construct(ItemsManager itemsManager)
+        public void Construct(TableContainer tableContainer)
         {
-            ItemsManager = itemsManager;
-            
             SceneRenderer.gameObject.SetActive(true);
             TableRenderer.gameObject.SetActive(false);
-            
-            TableRenderer.transform.SetParent(itemsManager.TableContainer);
-            TableRenderer.transform.localScale = Vector3.one;
+
+            tableContainer.Assign(TableRenderer);
         }
         public void BindRenderers(SceneItemRenderer sceneRenderer, TableItemRenderer tableRenderer)
         {

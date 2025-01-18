@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using Gameplay.Persons.Data;
 using Gameplay.Persons.Interfaces;
-using UnityEngine;
 using Utility;
 using VContainer;
 
@@ -12,11 +11,6 @@ namespace Gameplay.Persons
 {
     public class PersonBuilder : IPersonBuilder
     {
-        private readonly Type[] m_ReasonsOfEntry;
-        
-        private readonly IReasonOfEntryBuilder m_ReasonOfEntryBuilder;
-        private readonly IInconsistencyBuilder m_InconsistencyBuilder;
-        
         [Inject]
         public PersonBuilder(IReasonOfEntryBuilder reasonOfEntryBuilder, IInconsistencyBuilder inconsistencyBuilder)
         {
@@ -29,6 +23,13 @@ namespace Gameplay.Persons
                                        .ToArray();
         }
         
+        
+        private readonly Type[] m_ReasonsOfEntry;
+        
+        private readonly IReasonOfEntryBuilder m_ReasonOfEntryBuilder;
+        private readonly IInconsistencyBuilder m_InconsistencyBuilder;
+        
+        
         public Person Build()
         {
             Person person = new();
@@ -38,8 +39,6 @@ namespace Gameplay.Persons
             
             GetInconsistency(person, out Document document, out Type inconsistencyType);
             Inconsistency inconsistency = m_InconsistencyBuilder.Build(inconsistencyType, person, document);
-            
-            Debug.Log($"Person {person.Name.FirstNameIndex} {person.Name.LastNameIndex} was created with reason of entry {reasonType.Name} and inconsistency {inconsistencyType.Name}");
             
             return person;
         }

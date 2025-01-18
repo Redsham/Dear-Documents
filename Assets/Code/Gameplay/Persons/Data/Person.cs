@@ -30,12 +30,6 @@ namespace Gameplay.Persons.Data
         
         public int FirstNameIndex;
         public int LastNameIndex;
-        
-        public PersonName(int firstNameIndex, int lastNameIndex)
-        {
-            FirstNameIndex = firstNameIndex;
-            LastNameIndex = lastNameIndex;
-        }
     }
 
     public enum PersonGender

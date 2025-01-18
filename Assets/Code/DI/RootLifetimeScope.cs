@@ -11,6 +11,7 @@ namespace DI
         
         protected override void Configure(IContainerBuilder builder)
         {
+            // Register the InputActionAsset instance
             builder.RegisterInstance(m_InputActions);
         }
     }

@@ -1,36 +1,34 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace Gameplay.Items
 {
     [Serializable]
-    public struct ItemReference : ISerializationCallbackReceiver
+    public struct ItemBehaviourReference : ISerializationCallbackReceiver
     {
-        [SerializeField]
-        public string TypeName;
-
-        [NonSerialized]
-        public ItemBehaviour Object;
-
-        public Type Type { get; private set; }
-
-        ItemReference(Type type)
+        private ItemBehaviourReference(Type type)
         {
             Type     = type;
             TypeName = type.FullName;
             Object   = null;
         }
 
+        
+        [SerializeField] public string TypeName;
+        [NonSerialized] public ItemBehaviour Object;
+        public Type Type { get; private set; }
+
+        
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             TypeName = Type?.FullName;
         }
-
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
             if (!string.IsNullOrEmpty(TypeName))
             {
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     Type = assembly.GetType(TypeName);
                     if (Type != null)
@@ -39,9 +37,9 @@ namespace Gameplay.Items
             }
         }
 
-        public static ItemReference Create<T>() where T : ItemBehaviour
+        public static ItemBehaviourReference Create<T>() where T : ItemBehaviour
         {
-            return new ItemReference(typeof(T));
+            return new ItemBehaviourReference(typeof(T));
         }
     }
 }
