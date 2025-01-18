@@ -20,6 +20,7 @@ namespace Content.Items.Documents
             var passport = (Passport)Document;
             
             m_SerialNumber.text = passport.SerialNumber;
+            m_DateOfBirth.text = passport.DateOfBirth.ToString("dd.MM.yyyy");
             m_DateOfExpiry.text = passport.DateOfExpiry.ToString("dd.MM.yyyy");
         }
     }

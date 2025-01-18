@@ -36,9 +36,7 @@ namespace Gameplay.Items.Renderers
         public override void BeginDrag(Vector2 dragPosition, Vector2 dragOffset)
         {
             m_OriginPosition = transform.position;
-
-            #region Animation
-
+            
             if (m_MotionHandle.IsActive())
                 m_MotionHandle.Complete();
 
@@ -58,8 +56,6 @@ namespace Gameplay.Items.Renderers
                                         
                                         m_ShadowRenderer.color = new Color(0.0f, 0.0f, 0.0f, 1.0f - 0.5f * time);
                                     });
-
-            #endregion
         }
         public override void Drag(Vector2 dragPosition, Vector2 dragOffset)
         {
@@ -101,5 +97,36 @@ namespace Gameplay.Items.Renderers
         }
 
         #endregion
+
+        public void DropFromPoint(Vector2 startPosition, Vector2 endPosition)
+        {
+            // Drop animation
+            
+            if (m_MotionHandle.IsActive())
+                m_MotionHandle.Complete();
+            
+            float angle = Random.Range(-15.0f, 15.0f);
+            Vector2 offset = new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-2.0f, -1.0f));
+            m_OriginPosition = startPosition;
+            
+            m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.1f)
+                                    .WithEase(Ease.OutCubic)
+                                    .WithOnComplete(() =>
+                                    {
+                                        m_ShadowRenderer.gameObject.SetActive(false);
+                                    })
+                                    .Bind((time) =>
+                                    {
+                                        m_FakeHeight = (1.0f - time) * MAX_HEIGHT;
+
+                                        transform.rotation   = Quaternion.Euler(0.0f, 0.0f, angle * time);
+                                        transform.localScale = Vector3.Lerp(Vector3.one * 1.1f, Vector3.one, time);
+                                        m_OriginPosition     = Vector3.Lerp(startPosition, endPosition, time);
+
+                                        ApplyPosition();
+
+                                        m_ShadowRenderer.color = new Color(0.0f, 0.0f, 0.0f, 0.5f + 0.5f * time);
+                                    });
+        }
     }
 }
