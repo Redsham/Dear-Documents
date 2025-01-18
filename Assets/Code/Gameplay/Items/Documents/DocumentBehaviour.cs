@@ -13,7 +13,7 @@ namespace Gameplay.Items.Documents
             if (this is IOnDocumentAssigned onDocumentAssigned)
                 onDocumentAssigned.OnDocumentAssigned(document);
 
-            if (TableRenderer is DocumentItemRenderer renderer)
+            if (TableRenderer is DocumentItemRenderer<Document> renderer)
                 renderer.AssignDocument(document);
         }
     }

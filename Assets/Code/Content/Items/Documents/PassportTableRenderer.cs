@@ -1,13 +1,13 @@
 using Content.Person.Documents;
 using Gameplay.Items.Documents;
+using Gameplay.Persons.Interfaces;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.Tables;
+using VContainer;
 
 namespace Content.Items.Documents
 {
-    public class PassportTableRenderer : DocumentItemRenderer
+    public class PassportTableRenderer : DocumentItemRenderer<Passport>
     {
         [SerializeField] private TextMeshProUGUI m_FullName;
         [SerializeField] private TextMeshProUGUI m_SerialNumber;
@@ -15,13 +15,14 @@ namespace Content.Items.Documents
         [SerializeField] private TextMeshProUGUI m_DateOfExpiry;
         [SerializeField] private TextMeshProUGUI m_PlaceOfIssue;
         
+        [Inject] private IPersonNameService m_PersonNameService;
+        
         public override void OnDocumentAssigned()
         {
-            var passport = (Passport)Document;
-            
-            m_SerialNumber.text = passport.SerialNumber;
-            m_DateOfBirth.text = passport.DateOfBirth.ToString("dd.MM.yyyy");
-            m_DateOfExpiry.text = passport.DateOfExpiry.ToString("dd.MM.yyyy");
+            m_FullName.text     = m_PersonNameService.GetFullName(Document.Name, Document.Gender);
+            m_SerialNumber.text = Document.SerialNumber;
+            m_DateOfBirth.text  = Document.DateOfBirth.ToString("dd.MM.yyyy");
+            m_DateOfExpiry.text = Document.DateOfExpiry.ToString("dd.MM.yyyy");
         }
     }
 }

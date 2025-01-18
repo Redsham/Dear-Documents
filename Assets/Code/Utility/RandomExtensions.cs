@@ -16,5 +16,10 @@ namespace Utility
         {
             return list[UnityEngine.Random.Range(0, list.Count)];
         }
+        public static T GetRandomEnumValue<T>()
+        {
+            T[] values = System.Enum.GetValues(typeof(T)) as T[];
+            return values.GetRandom();
+        }
     }
 }

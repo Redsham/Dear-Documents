@@ -17,10 +17,11 @@ namespace DI
             builder.RegisterComponentInHierarchy<ItemsDropper>();
             
             // Registering person services
-            builder.Register<IDocumentBuilder,      DocumentBuilder>(Lifetime.Singleton);
+            builder.Register<IDocumentBuilder, DocumentBuilder>(Lifetime.Singleton);
             builder.Register<IInconsistencyBuilder, InconsistencyBuilder>(Lifetime.Singleton);
             builder.Register<IReasonOfEntryBuilder, ReasonOfEntryBuilder>(Lifetime.Singleton);
-            builder.Register<IPersonBuilder,        PersonBuilder>(Lifetime.Singleton);
+            builder.Register<IPersonNameService, PersonNameService>(Lifetime.Singleton);
+            builder.Register<IPersonBuilder, PersonBuilder>(Lifetime.Singleton);
         }
     }
 }

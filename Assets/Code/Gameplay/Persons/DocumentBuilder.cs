@@ -19,6 +19,7 @@ namespace Gameplay.Persons
             
             // Create an instance of the reason of entry
             Document document = (Document) Activator.CreateInstance(documentType);
+            document.AssignPerson(person);
             
             // Inject dependencies
             m_ObjectResolver.Inject(document);

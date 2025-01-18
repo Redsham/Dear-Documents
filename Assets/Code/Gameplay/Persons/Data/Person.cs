@@ -25,9 +25,6 @@ namespace Gameplay.Persons.Data
 
     public struct PersonName
     {
-        public const int FIRST_NAME_COUNT = 10;
-        public const int LAST_NAME_COUNT  = 10;
-        
         public int FirstNameIndex;
         public int LastNameIndex;
     }
