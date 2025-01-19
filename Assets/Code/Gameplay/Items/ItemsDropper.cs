@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using Content.Person.Documents;
 using Cysharp.Threading.Tasks;
 using Gameplay.Items.Documents;
 using Gameplay.Persons.Data;
 using UnityEngine;
+using Utility;
 using VContainer;
 using Random = UnityEngine.Random;
 
@@ -9,11 +12,13 @@ namespace Gameplay.Items
 {
     public class ItemsDropper : MonoBehaviour
     {
+        [Inject] private ItemsMover   m_ItemsMover;
         [Inject] private ItemsManager m_ItemsManager;
         
-        [SerializeField] private Transform m_DropPoint;
-        [SerializeField] private Transform m_DropAreaCenter;
-        [SerializeField] private Vector2   m_DropAreaBounds;
+        [SerializeField] private Transform     m_DropPoint;
+        [SerializeField] private AreaComponent m_DropArea;
+        
+        private readonly List<DocumentBehaviour> m_DroppedDocuments = new();
 
         
         public async UniTask DropAll(Person person)
@@ -36,26 +41,20 @@ namespace Gameplay.Items
             
             DocumentBehaviour behaviour = (DocumentBehaviour)m_ItemsManager.Spawn(asset);
             behaviour.AssignDocument(document);
-
-            Vector2 dropAreaCenter = m_DropAreaCenter.position;
-            Vector2 dropOffset = new(Random.Range(-m_DropAreaBounds.x, m_DropAreaBounds.x), Random.Range(-m_DropAreaBounds.y, m_DropAreaBounds.y));
-                       
-            behaviour.SceneRenderer.DropFromPoint(m_DropPoint.position, dropAreaCenter + dropOffset);
+            
+            m_DroppedDocuments.Add(behaviour);
+            behaviour.SceneRenderer.DropFromPoint(m_DropPoint.position, m_DropArea.GetRandomPoint(), 0.3f);
+            
+            m_ItemsMover.OnReturnItem += OnReturnItem;
+            m_ItemsMover.CanReturnItem = (item) => ((DocumentBehaviour)item).Document is not Passport;
         }
-
-        
-        #region Unity Methods
-
-        private void OnDrawGizmosSelected()
+        private void OnReturnItem(ItemBehaviour item)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(m_DropAreaCenter.position, m_DropAreaBounds * 2);
+            if (!m_DroppedDocuments.Contains((DocumentBehaviour)item)) 
+                return;
+            
+            m_DroppedDocuments.Remove((DocumentBehaviour)item);
+            m_ItemsManager.Destroy(item);
         }
-        private void OnValidate()
-        {
-            m_DropAreaBounds = new Vector2(Mathf.Max(0.0f, m_DropAreaBounds.x), Mathf.Max(0.0f, m_DropAreaBounds.y));
-        }
-
-        #endregion
     }
 }

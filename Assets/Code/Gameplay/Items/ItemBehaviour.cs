@@ -1,4 +1,4 @@
-using System;
+using Cysharp.Threading.Tasks;
 using Gameplay.Items.Renderers;
 using UnityEngine;
 using VContainer;
@@ -15,12 +15,10 @@ namespace Gameplay.Items
         public TableItemRenderer TableRenderer { get; private set; }
         
         [Inject]
-        public void Construct(TableContainer tableContainer)
+        public void Construct()
         {
             SceneRenderer.gameObject.SetActive(true);
             TableRenderer.gameObject.SetActive(false);
-
-            tableContainer.Assign(TableRenderer);
         }
         public void BindRenderers(SceneItemRenderer sceneRenderer, TableItemRenderer tableRenderer)
         {
@@ -34,6 +32,19 @@ namespace Gameplay.Items
             
             SceneRenderer.gameObject.SetActive(!onTable);
             TableRenderer.gameObject.SetActive(onTable);
+        }
+        public async UniTask Return()
+        {
+            UniTask returnableTask     = UniTask.CompletedTask;
+            UniTask returnableSelfTask = UniTask.CompletedTask;
+
+            if (Renderer is IOnReturnHandler returnable)
+                returnableTask = returnable.OnReturn();
+            
+            if(this is IOnReturnHandler returnableSelf)
+                returnableSelfTask = returnableSelf.OnReturn();
+
+            await UniTask.WhenAll(returnableTask, returnableSelfTask);
         }
         public void SetLayer(int layer)
         {

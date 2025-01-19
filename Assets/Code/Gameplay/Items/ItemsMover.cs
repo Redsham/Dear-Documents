@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -9,15 +11,38 @@ namespace Gameplay.Items
 {
     public class ItemsMover : MonoBehaviour
     {
-        [SerializeField] private Camera   m_SceneCamera;
-        [SerializeField] private RawImage m_SceneViewport;
+        /// <summary>
+        /// Returns true if the item can be returned
+        /// </summary>
+        public Predicate<ItemBehaviour>    CanReturnItem { get; set; }
+        /// <summary>
+        /// Invoked when an item is returned
+        /// </summary>
+        public event Action<ItemBehaviour> OnReturnItem = delegate {  };
+        /// <summary>
+        /// Invoked when an item enters the return area
+        /// </summary>
+        public event Action<ItemBehaviour> OnEnterReturnArea = delegate {  };
+        /// <summary>
+        /// Invoked when an item exits the return area or is returned
+        /// </summary>
+        public event Action<ItemBehaviour> OnExitReturnArea = delegate {  };
+        
+        [SerializeField] private Camera        m_SceneCamera;
+        [SerializeField] private RawImage      m_SceneViewport;
+        [SerializeField] private AreaComponent m_ReturnArea;
+        [SerializeField] private AreaComponent m_TableArea;
         
         [Inject] private InputActionAsset m_InputActions;
         [Inject] private ItemsManager     m_ItemsManager;
         private ItemBehaviour    m_SelectedItem;
         
-        private bool    m_IsDragging;
-        private bool    m_OnTable;
+        private bool m_IsDragging;
+        private bool m_OnTable;
+        private bool m_CanReturn;
+        private bool m_InReturnArea;
+        
+        private Vector2 m_LastScreenPoint;
         
         private Vector2 m_SceneDragOffset;
         private Vector2 m_TableDragOffset;
@@ -34,6 +59,7 @@ namespace Gameplay.Items
             }
         }
 
+        
         [Inject]
         public void Construct()
         {
@@ -44,13 +70,25 @@ namespace Gameplay.Items
 
         private void PointerUpdate(InputAction.CallbackContext context, out Vector2 screenPoint, out Vector2 worldPoint, out bool onTable, out Vector2 contextPoint)
         {
-            screenPoint = context.ReadValue<Vector2>();
+            if(m_IsDragging)
+                m_LastScreenPoint = screenPoint = context.ReadValue<Vector2>();
+            else
+                screenPoint = m_LastScreenPoint;
+            
             onTable = screenPoint.x >= m_SceneViewport.rectTransform.rect.width * m_SceneViewport.rectTransform.lossyScale.x;
             
             worldPoint = onTable ? Vector2.zero : VirtualCameraUtils.ViewportToWorldPoint(m_SceneCamera, m_SceneViewport.rectTransform, screenPoint);
             contextPoint = onTable ? screenPoint : worldPoint;
         }
         
+        private async UniTaskVoid ReturnItem(ItemBehaviour item)
+        {
+            await item.Return();
+            OnReturnItem?.Invoke(item);
+        }
+
+        #region Drag & Drop
+
         private void BeginDrag(InputAction.CallbackContext context)
         {
             m_IsDragging = true;
@@ -76,7 +114,8 @@ namespace Gameplay.Items
             
             // Check if item was selected
             if (m_SelectedItem == null) return;
-            
+
+            m_CanReturn = CanReturnItem.Invoke(m_SelectedItem);
             m_ItemsManager.ToTop(m_SelectedItem);
             
             // Begin drag
@@ -96,6 +135,26 @@ namespace Gameplay.Items
             if (transition)
                 m_SelectedItem.Transition(m_OnTable);
             
+            #region Return Area
+
+            if (m_CanReturn)
+            {
+                // Check if item is in return area
+                bool prevInReturnArea = m_InReturnArea;
+                m_InReturnArea = !m_OnTable && m_ReturnArea.Contains(worldPoint);
+            
+                // Enter/Exit return area
+                if(prevInReturnArea != m_InReturnArea)
+                {
+                    if(m_InReturnArea)
+                        OnEnterReturnArea.Invoke(m_SelectedItem);
+                    else
+                        OnExitReturnArea.Invoke(m_SelectedItem);
+                }
+            }
+
+            #endregion
+            
             // Drag
             m_SelectedItem.Renderer.Drag(contextPoint, ContextOffset);
         }
@@ -106,13 +165,26 @@ namespace Gameplay.Items
             
             PointerUpdate(context, out Vector2 screenPoint, out Vector2 worldPoint, out m_OnTable, out Vector2 contextPoint);
             
-            // End drag
-            m_SelectedItem.Renderer.EndDrag(m_OnTable ? screenPoint : worldPoint, ContextOffset);
+            if (m_CanReturn && m_InReturnArea)
+            {
+                // Return item
+                ReturnItem(m_SelectedItem).Forget();
+                OnExitReturnArea?.Invoke(m_SelectedItem);
+            }
+            else
+            {
+                if(m_OnTable)
+                    m_SelectedItem.Renderer.EndDrag(contextPoint, ContextOffset);
+                else
+                    m_SelectedItem.Renderer.EndDrag(m_TableArea.Clamp(worldPoint), ContextOffset);
+            }
             
+            // Reset
             m_SelectedItem = null;
-            
             m_TableDragOffset = Vector2.zero;
             m_SceneDragOffset = Vector2.zero;
         }
+
+        #endregion
     }
 }

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Utility;
 using LitMotion;
@@ -5,9 +6,10 @@ using Random = UnityEngine.Random;
 
 namespace Gameplay.Items.Renderers
 {
-    public class SceneItemRenderer : ItemRenderer
+    public class SceneItemRenderer : ItemRenderer, IOnReturnHandler
     {
         private const float MAX_HEIGHT = 0.2f;
+        private const float RETURN_DURATION = 0.75f;
         
         private SpriteRenderer m_SpriteRenderer;
         private SpriteRenderer m_ShadowRenderer;
@@ -62,32 +64,13 @@ namespace Gameplay.Items.Renderers
             m_OriginPosition   = dragPosition - dragOffset;
             ApplyPosition();
         }
+
         public override void EndDrag(Vector2 dragPosition, Vector2 dragOffset)
         {
-            // Drop animation
+            float distance = Vector2.Distance(m_OriginPosition, dragPosition);
+            float duration = Mathf.Max(0.1f, Mathf.Sqrt(distance) * 0.1f);
             
-            if (m_MotionHandle.IsActive())
-                m_MotionHandle.Complete();
-            
-            float angle = Random.Range(-15.0f, 15.0f);
-            
-            m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.1f)
-                                 .WithEase(Ease.OutCubic)
-                                 .WithOnComplete(() =>
-                                 {
-                                     m_ShadowRenderer.gameObject.SetActive(false);
-                                 })
-                                 .Bind((time) =>
-                                 {
-                                     m_FakeHeight       = (1.0f - time) * MAX_HEIGHT;
-                                     
-                                     transform.rotation   = Quaternion.Euler(0.0f, 0.0f, angle * time);
-                                     transform.localScale = Vector3.Lerp(Vector3.one * 1.1f, Vector3.one, time);
-                                     
-                                     ApplyPosition();
-
-                                     m_ShadowRenderer.color = new Color(0.0f, 0.0f, 0.0f, 0.5f + 0.5f * time);
-                                 });
+            DropFromPoint(m_OriginPosition, dragPosition, duration);
         }
         
         private void ApplyPosition()
@@ -98,7 +81,7 @@ namespace Gameplay.Items.Renderers
 
         #endregion
 
-        public void DropFromPoint(Vector2 startPosition, Vector2 endPosition)
+        public void DropFromPoint(Vector2 startPosition, Vector2 endPosition, float duration = 0.1f)
         {
             // Drop animation
             
@@ -106,15 +89,14 @@ namespace Gameplay.Items.Renderers
                 m_MotionHandle.Complete();
             
             float angle = Random.Range(-15.0f, 15.0f);
-            Vector2 offset = new(Random.Range(-0.1f, 0.1f), Random.Range(-2.0f, -1.0f));
             m_OriginPosition = startPosition;
             
-            m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.1f)
+            // Enable shadow
+            m_ShadowRenderer.gameObject.SetActive(true);
+            
+            m_MotionHandle = LMotion.Create(0.0f, 1.0f, duration)
                                     .WithEase(Ease.OutCubic)
-                                    .WithOnComplete(() =>
-                                    {
-                                        m_ShadowRenderer.gameObject.SetActive(false);
-                                    })
+                                    .WithOnComplete(() => m_ShadowRenderer.gameObject.SetActive(false))
                                     .Bind((time) =>
                                     {
                                         m_FakeHeight = (1.0f - time) * MAX_HEIGHT;
@@ -127,6 +109,35 @@ namespace Gameplay.Items.Renderers
 
                                         m_ShadowRenderer.color = new Color(0.0f, 0.0f, 0.0f, 0.5f + 0.5f * time);
                                     });
+        }
+        
+        public async UniTask OnReturn()
+        {
+            if (m_MotionHandle.IsActive())
+                m_MotionHandle.Complete();
+            
+            Vector2 startPosition = m_OriginPosition;
+            Vector2 endPosition   = (Vector2)m_OriginPosition + Physics2D.gravity * RETURN_DURATION * RETURN_DURATION / 2.0f;
+            
+            m_SpriteRenderer.sortingLayerName = "Default";
+            m_ShadowRenderer.gameObject.SetActive(false);
+            
+            m_MotionHandle = LMotion.Create(0.0f, 1.0f, RETURN_DURATION)
+                                    .WithEase(Ease.InExpo)
+                                    .Bind((time) =>
+                                    {
+                                        m_FakeHeight       = time * MAX_HEIGHT;
+                                        
+                                        transform.rotation   = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0.0f, 0.0f, 180.0f), time);
+                                        transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, time);
+                                        m_OriginPosition     = Vector3.Lerp(startPosition, endPosition, time);
+                                        
+                                        ApplyPosition();
+                                        
+                                        m_SpriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - time);
+                                    });
+            
+            await m_MotionHandle.ToUniTask();
         }
     }
 }

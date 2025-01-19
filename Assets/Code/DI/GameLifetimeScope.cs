@@ -13,7 +13,6 @@ namespace DI
             // Registering items services
             builder.RegisterComponentInHierarchy<ItemsManager>();
             builder.RegisterComponentInHierarchy<ItemsMover>();
-            builder.RegisterComponentInHierarchy<TableContainer>();
             builder.RegisterComponentInHierarchy<ItemsDropper>();
             
             // Registering person services
