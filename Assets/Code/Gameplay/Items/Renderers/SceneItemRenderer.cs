@@ -70,7 +70,7 @@ namespace Gameplay.Items.Renderers
             float distance = Vector2.Distance(m_OriginPosition, dragPosition);
             float duration = Mathf.Max(0.1f, Mathf.Sqrt(distance) * 0.1f);
             
-            DropFromPoint(m_OriginPosition, dragPosition, duration);
+            DropFromPoint(m_OriginPosition, dragPosition + dragOffset, duration);
         }
         
         private void ApplyPosition()

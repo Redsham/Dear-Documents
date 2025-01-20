@@ -1,23 +1,21 @@
 using LitMotion;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utility;
 
 namespace Gameplay.Items.Renderers
 {
     public class TableItemRenderer : ItemRenderer
     {
-        private RectTransform m_RectTransform;
-        private MotionHandle m_MotionHandle;
+        public RectTransform RectTransform;
+        
+        private MotionHandle  m_MotionHandle;
 
         
-        private void Awake() => m_RectTransform = m_RectTransform = (RectTransform)transform;
+        private void Awake() => RectTransform = RectTransform = (RectTransform)transform;
 
-        public override Bounds2D GetBounds()
-        {
-            Vector3 lossyScale = m_RectTransform.lossyScale;
-            return new Bounds2D(m_RectTransform.rect.min * lossyScale, m_RectTransform.rect.max * lossyScale) + m_RectTransform.position;
-        }
-        public override Vector2 GetDragOffset(Vector2 dragPosition) => dragPosition - (Vector2)m_RectTransform.position;
+        public override Bounds2D GetBounds() => new(RectTransform);
+        public override Vector2 GetDragOffset(Vector2 dragPosition) => dragPosition - (Vector2)RectTransform.position;
         public override void SetLayer(int layer) => transform.SetSiblingIndex(layer);
 
         #region Drag & Drop

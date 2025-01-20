@@ -13,6 +13,14 @@ namespace Utility
             Min = min;
             Max = max;
         }
+        public Bounds2D(RectTransform rectTransform)
+        {
+            Vector2 lossyScale = rectTransform.lossyScale;
+            Vector2 position = rectTransform.position;
+            
+            Min = rectTransform.rect.min * lossyScale + position;
+            Max = rectTransform.rect.max * lossyScale + position;
+        }
         
         public bool Contains(Vector2 point)
         {
@@ -21,6 +29,11 @@ namespace Utility
         public bool Contains(Bounds2D bounds)
         {
             return bounds.Min.x >= Min.x && bounds.Max.x <= Max.x && bounds.Min.y >= Min.y && bounds.Max.y <= Max.y;
+        }
+        
+        public bool Intersecting(Bounds2D bounds)
+        {
+            return Min.x <= bounds.Max.x && Max.x >= bounds.Min.x && Min.y <= bounds.Max.y && Max.y >= bounds.Min.y;
         }
         
         public static Bounds2D operator +(Bounds2D bounds, Vector2 offset)

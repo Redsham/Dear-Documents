@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Person.Inconsistencies;
+using Gameplay;
 using Gameplay.Persons.Data;
 using Gameplay.Persons.Interfaces;
 using VContainer;
@@ -17,10 +18,13 @@ namespace Content.Person.Documents
         public DateTime DateOfExpiry { get; set; }
         public string   SerialNumber { get; set; }
         
+        public DecisionOnEntry DecisionOnEntry { get; set; } = DecisionOnEntry.None;
+        
         
         public override void Construct(Gameplay.Persons.Data.Person person)
         {
             Name         = person.Name;
+            Gender       = person.Gender;
             DateOfBirth  = person.BirthDate;
             DateOfExpiry = DateTime.Now + TimeSpan.FromDays(Random.Range(1, 365));
             SerialNumber = $"{Random.Range(0, 10000):0000} {Random.Range(0, 1000000):000000}";

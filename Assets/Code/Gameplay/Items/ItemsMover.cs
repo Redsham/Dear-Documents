@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utility;
@@ -30,6 +31,7 @@ namespace Gameplay.Items
         
         [SerializeField] private Camera        m_SceneCamera;
         [SerializeField] private RawImage      m_SceneViewport;
+        [SerializeField] private RectTransform m_TableContainer;
         [SerializeField] private AreaComponent m_ReturnArea;
         [SerializeField] private AreaComponent m_TableArea;
         
@@ -86,11 +88,30 @@ namespace Gameplay.Items
             await item.Return();
             OnReturnItem?.Invoke(item);
         }
+        
+        private bool IsAnyOverUI(Vector2 screenPoint)
+        {
+            List<RaycastResult> results = new();
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = screenPoint }, results);
+            foreach (RaycastResult result in results)
+            {
+                if(result.gameObject != m_SceneViewport.gameObject && 
+                   !result.gameObject.transform.IsChildOf(m_TableContainer))
+                    return true;
+
+                break;
+            }
+            
+            return false;
+        }
 
         #region Drag & Drop
-
+        
         private void BeginDrag(InputAction.CallbackContext context)
         {
+            // Skip if over UI
+            if (IsAnyOverUI(context.ReadValue<Vector2>())) return;
+            
             m_IsDragging = true;
             PointerUpdate(context, out Vector2 screenPoint, out Vector2 worldPoint, out m_OnTable, out Vector2 contextPoint);
             
@@ -160,6 +181,8 @@ namespace Gameplay.Items
         }
         private void EndDrag(InputAction.CallbackContext context)
         {
+            if (!m_IsDragging) return;
+            
             m_IsDragging = false;
             if (m_SelectedItem == null) return;
             

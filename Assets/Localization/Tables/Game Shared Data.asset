@@ -71,6 +71,18 @@ MonoBehaviour:
     m_Key: return_hint
     m_Metadata:
       m_Items: []
+  - m_Id: 2169517005332480
+    m_Key: stamp_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224694504710144
+    m_Key: positive_decision
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224772250329088
+    m_Key: negative_decision
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -20,6 +20,7 @@ namespace Utility
         /// Size of the area
         /// </summary>
         public Vector2 Size => m_Extents * 2;
+        public Bounds2D Bounds => new(GetPointFromNormalized(Vector2.zero), GetPointFromNormalized(Vector2.one));
 
 
         [SerializeField] private Vector2 m_Extents = Vector2.one;
@@ -28,6 +29,14 @@ namespace Utility
         {
             Vector2 randomPoint = new Vector2(Random.Range(-m_Extents.x, m_Extents.x), Random.Range(-m_Extents.y, m_Extents.y));
             return transform.TransformPoint(randomPoint);
+        }
+        public Vector2 GetPointFromNormalized(Vector2 normalizedPoint)
+        {
+            Vector2 point = new Vector2(
+                Mathf.Lerp(-m_Extents.x, m_Extents.x, normalizedPoint.x),
+                Mathf.Lerp(-m_Extents.y, m_Extents.y, normalizedPoint.y)
+            );
+            return transform.TransformPoint(point);
         }
         public bool Contains(Vector2 point)
         {

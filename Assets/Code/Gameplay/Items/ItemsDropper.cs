@@ -46,7 +46,11 @@ namespace Gameplay.Items
             behaviour.SceneRenderer.DropFromPoint(m_DropPoint.position, m_DropArea.GetRandomPoint(), 0.3f);
             
             m_ItemsMover.OnReturnItem += OnReturnItem;
-            m_ItemsMover.CanReturnItem = (item) => ((DocumentBehaviour)item).Document is not Passport;
+            m_ItemsMover.CanReturnItem = (item) =>
+            {
+                Passport passport = m_DroppedDocuments.Find(x => x.Document is Passport).Document as Passport;
+                return passport is not { DecisionOnEntry: DecisionOnEntry.None };
+            };
         }
         private void OnReturnItem(ItemBehaviour item)
         {
