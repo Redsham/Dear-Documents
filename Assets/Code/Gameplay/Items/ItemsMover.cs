@@ -154,7 +154,7 @@ namespace Gameplay.Items
             // Transition
             bool transition = prevOnTable != m_OnTable;
             if (transition)
-                m_SelectedItem.Transition(m_OnTable);
+                m_SelectedItem.Transition(m_OnTable, true);
             
             #region Return Area
 

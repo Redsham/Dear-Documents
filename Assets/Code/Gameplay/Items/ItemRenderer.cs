@@ -7,7 +7,8 @@ namespace Gameplay.Items
     {
         public abstract Bounds2D GetBounds();
         public abstract Vector2  GetDragOffset(Vector2 dragPosition);
-        public abstract void     SetLayer(int layer);
+        public abstract void     SetLayer(int          layer);
+        public abstract void     OnTransition(bool isDragging);
         
         public abstract void BeginDrag(Vector2 dragPosition, Vector2 dragOffset);
         public abstract void Drag(Vector2      dragPosition, Vector2 dragOffset);

@@ -26,12 +26,15 @@ namespace Gameplay.Items
             TableRenderer = tableRenderer;
         }
         
-        public void Transition(bool onTable)
+        public void Transition(bool onTable, bool isDragging)
         {
             IsOnTable = onTable;
             
             SceneRenderer.gameObject.SetActive(!onTable);
             TableRenderer.gameObject.SetActive(onTable);
+            
+            SceneRenderer.OnTransition(isDragging);
+            TableRenderer.OnTransition(isDragging);
         }
         public async UniTask Return()
         {
@@ -53,7 +56,7 @@ namespace Gameplay.Items
             SceneRenderer.SetLayer(layer);
             TableRenderer.SetLayer(layer);
         }
-
+        
         private void OnValidate()
         {
             SceneRenderer ??= GetComponentInChildren<SceneItemRenderer>();

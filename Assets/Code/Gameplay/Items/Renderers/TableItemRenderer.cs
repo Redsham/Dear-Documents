@@ -17,6 +17,7 @@ namespace Gameplay.Items.Renderers
         public override Bounds2D GetBounds() => new(RectTransform);
         public override Vector2 GetDragOffset(Vector2 dragPosition) => dragPosition - (Vector2)RectTransform.position;
         public override void SetLayer(int layer) => transform.SetSiblingIndex(layer);
+        public override void OnTransition(bool isDragging) => transform.localScale = Vector3.one * (isDragging ? 1.1f : 1.0f);
 
         #region Drag & Drop
 

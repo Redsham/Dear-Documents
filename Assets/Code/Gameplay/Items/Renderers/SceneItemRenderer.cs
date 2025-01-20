@@ -14,9 +14,9 @@ namespace Gameplay.Items.Renderers
         private SpriteRenderer m_SpriteRenderer;
         private SpriteRenderer m_ShadowRenderer;
         
-        private float          m_FakeHeight = 0.0f;
-        private MotionHandle   m_MotionHandle;
-        private Vector3        m_OriginPosition;
+        private float        m_FakeHeight;
+        private MotionHandle m_MotionHandle;
+        private Vector3      m_OriginPosition;
 
         
         private void Awake()
@@ -31,6 +31,13 @@ namespace Gameplay.Items.Renderers
         {
             m_SpriteRenderer.sortingOrder = layer * 2 + 1;
             m_ShadowRenderer.sortingOrder = layer * 2;
+        }
+        public override void OnTransition(bool isDragging)
+        {
+            m_FakeHeight = isDragging ? MAX_HEIGHT : 0.0f;
+            
+            m_ShadowRenderer.gameObject.SetActive(isDragging);
+            m_ShadowRenderer.color = new Color(0.0f, 0.0f, 0.0f, isDragging ? 0.5f : 1.0f);
         }
 
         #region Drag & Drop
@@ -70,7 +77,7 @@ namespace Gameplay.Items.Renderers
             float distance = Vector2.Distance(m_OriginPosition, dragPosition);
             float duration = Mathf.Max(0.1f, Mathf.Sqrt(distance) * 0.1f);
             
-            DropFromPoint(m_OriginPosition, dragPosition + dragOffset, duration);
+            DropFromPoint(m_OriginPosition, dragPosition - dragOffset, duration);
         }
         
         private void ApplyPosition()
