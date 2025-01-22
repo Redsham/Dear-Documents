@@ -2,7 +2,7 @@ using Gameplay.Persons.Data;
 
 namespace Gameplay.Items.Documents
 {
-    public class DocumentBehaviour : ItemBehaviour
+    public class DocumentBehaviourBase : ItemBehaviour
     {
         public Document Document { get; private set; }
 
@@ -17,6 +17,7 @@ namespace Gameplay.Items.Documents
                 renderer.AssignDocument(document);
         }
     }
+    
     
     public interface IOnDocumentAssigned
     {

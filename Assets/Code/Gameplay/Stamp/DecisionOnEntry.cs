@@ -1,4 +1,4 @@
-namespace Gameplay
+namespace Gameplay.Stamp
 {
     public enum DecisionOnEntry
     {

@@ -58,7 +58,7 @@ namespace UI.Gameplay
 
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.1f)
                                     .WithEase(Ease.OutCubic)
-                                    .Bind((time) =>
+                                    .Bind(time =>
                                     {
                                         m_RectTransform.localScale = Vector3.one * time;
                                     });
@@ -71,7 +71,7 @@ namespace UI.Gameplay
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.3f)
                                     .WithEase(Ease.OutCubic)
                                     .WithOnComplete(() => IsHintActive = false)
-                                    .Bind((time) =>
+                                    .Bind(time =>
                                     {
                                         m_RectTransform.localScale = Vector3.one * (1.0f - time);
                                     });

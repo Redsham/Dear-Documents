@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
+using LitMotion;
 using UnityEngine;
 using Utility;
-using LitMotion;
 using Random = UnityEngine.Random;
 
 namespace Gameplay.Items.Renderers
@@ -54,7 +54,7 @@ namespace Gameplay.Items.Renderers
             
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.3f)
                                     .WithEase(Ease.OutCubic)
-                                    .Bind((time) =>
+                                    .Bind(time =>
                                     {
                                         m_FakeHeight       = time * MAX_HEIGHT;
                                         
@@ -104,7 +104,7 @@ namespace Gameplay.Items.Renderers
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, duration)
                                     .WithEase(Ease.OutCubic)
                                     .WithOnComplete(() => m_ShadowRenderer.gameObject.SetActive(false))
-                                    .Bind((time) =>
+                                    .Bind(time =>
                                     {
                                         m_FakeHeight = (1.0f - time) * MAX_HEIGHT;
 
@@ -131,7 +131,7 @@ namespace Gameplay.Items.Renderers
             
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, RETURN_DURATION)
                                     .WithEase(Ease.InExpo)
-                                    .Bind((time) =>
+                                    .Bind(time =>
                                     {
                                         m_FakeHeight       = time * MAX_HEIGHT;
                                         

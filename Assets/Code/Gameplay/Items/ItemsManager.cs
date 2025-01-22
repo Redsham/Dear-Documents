@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Gameplay.Items.Renderers;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using Object = UnityEngine.Object;
 
 namespace Gameplay.Items
 {
@@ -60,7 +57,7 @@ namespace Gameplay.Items
         public void Destroy(ItemBehaviour item)
         {
             m_Items.Remove(item);
-            Object.Destroy(item.gameObject);
+            Destroy(item.gameObject);
         }
         
         /// <summary>

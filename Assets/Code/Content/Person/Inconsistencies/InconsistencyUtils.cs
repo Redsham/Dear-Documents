@@ -1,5 +1,4 @@
 using System;
-using Gameplay.Persons.Data;
 using Random = UnityEngine.Random;
 
 namespace Content.Person.Inconsistencies

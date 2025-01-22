@@ -43,7 +43,7 @@ namespace UI.Gameplay
                                             Hover(true);
                                     })
                                     .WithOnCancel(() => m_IsMoving = false)
-                                    .Bind((time) =>
+                                    .Bind(time =>
                                     {
                                         m_Position = time;
                                         m_RectTransform.anchoredPosition = Vector2.Lerp(
@@ -74,7 +74,7 @@ namespace UI.Gameplay
             
             m_MotionHandle = LMotion.Create(m_Position, targetPosition, duration)
                                     .WithEase(Ease.OutExpo)
-                                    .Bind((time) =>
+                                    .Bind(time =>
                                     {
                                         m_Position = time;
                                         m_RectTransform.anchoredPosition = Vector2.Lerp(

@@ -30,7 +30,7 @@ namespace Code.Gameplay.Items.Editor
                 m_Types = GetAllTypeNames();
                 if (prop.serializedObject.targetObject is ItemBehaviour item)
                 {
-                    var itemName = item.GetType().FullName;
+                    string itemName = item.GetType().FullName;
                     m_Types = m_Types.Where(name => name != itemName).ToArray();
                 }
             }

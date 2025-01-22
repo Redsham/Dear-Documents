@@ -40,7 +40,7 @@ namespace UI.Gameplay
             
             await LMotion.Create(0.0f, 1.0f, 0.3f)
                          .WithEase(Ease.OutBounce)
-                         .Bind((time) =>
+                         .Bind(time =>
                          {
                              m_RectTransform.anchoredPosition = Vector2.Lerp(
                                  m_DefaultPosition,
@@ -54,7 +54,7 @@ namespace UI.Gameplay
             
             await LMotion.Create(0.0f, 1.0f, 0.3f)
                          .WithEase(Ease.OutExpo)
-                         .Bind((time) =>
+                         .Bind(time =>
                          {
                              m_RectTransform.anchoredPosition = Vector2.Lerp(
                                  m_DefaultPosition + m_StampOffset,

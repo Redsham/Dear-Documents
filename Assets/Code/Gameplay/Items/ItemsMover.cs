@@ -15,7 +15,7 @@ namespace Gameplay.Items
         /// <summary>
         /// Returns true if the item can be returned
         /// </summary>
-        public Predicate<ItemBehaviour>    CanReturnItem { get; set; }
+        public Predicate<ItemBehaviour> CanReturnItem { get; set; } = item => false;
         /// <summary>
         /// Invoked when an item is returned
         /// </summary>

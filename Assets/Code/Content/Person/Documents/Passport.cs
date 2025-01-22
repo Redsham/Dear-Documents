@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Content.Person.Inconsistencies;
-using Gameplay;
 using Gameplay.Persons.Data;
-using Gameplay.Persons.Interfaces;
-using VContainer;
+using Gameplay.Stamp;
 using Random = UnityEngine.Random;
 
 namespace Content.Person.Documents
 {
-    public class Passport : Document
+    public class Passport : Document, IStampable
     {
         public PersonName   Name        { get; set; }
         public PersonGender Gender      { get; set; }

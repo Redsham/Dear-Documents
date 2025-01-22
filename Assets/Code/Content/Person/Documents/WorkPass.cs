@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Person.Inconsistencies;
 using Gameplay.Persons.Data;
+using Random = UnityEngine.Random;
 
 namespace Content.Person.Documents
 {
@@ -15,7 +16,7 @@ namespace Content.Person.Documents
         {
             Name = person.Name;
             DateOfExpiry = DateTime.Now + TimeSpan.FromDays(365);
-            Specialization = (PersonSpecialization) UnityEngine.Random.Range(0, Enum.GetValues(typeof(PersonSpecialization)).Length);
+            Specialization = (PersonSpecialization) Random.Range(0, Enum.GetValues(typeof(PersonSpecialization)).Length);
         }
 
         public override IReadOnlyList<Type> GetInconsistencies()

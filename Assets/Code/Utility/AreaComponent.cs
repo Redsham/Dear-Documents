@@ -27,12 +27,12 @@ namespace Utility
 
         public Vector2 GetRandomPoint()
         {
-            Vector2 randomPoint = new Vector2(Random.Range(-m_Extents.x, m_Extents.x), Random.Range(-m_Extents.y, m_Extents.y));
+            Vector2 randomPoint = new(Random.Range(-m_Extents.x, m_Extents.x), Random.Range(-m_Extents.y, m_Extents.y));
             return transform.TransformPoint(randomPoint);
         }
         public Vector2 GetPointFromNormalized(Vector2 normalizedPoint)
         {
-            Vector2 point = new Vector2(
+            Vector2 point = new(
                 Mathf.Lerp(-m_Extents.x, m_Extents.x, normalizedPoint.x),
                 Mathf.Lerp(-m_Extents.y, m_Extents.y, normalizedPoint.y)
             );

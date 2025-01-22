@@ -1,3 +1,4 @@
+using System;
 using Gameplay.Items.Renderers;
 using Gameplay.Persons.Data;
 
@@ -11,7 +12,7 @@ namespace Gameplay.Items.Documents
         public virtual void AssignDocument(Document document)
         {
             if (Document != null)
-                throw new System.Exception("Re-assigning document is not allowed");
+                throw new Exception("Re-assigning document is not allowed");
             
             Document = document;
             OnDocumentAssigned();
@@ -26,7 +27,7 @@ namespace Gameplay.Items.Documents
         public override void AssignDocument(Document document)
         {
             if (document is not T typedDocument)
-                throw new System.Exception($"Document is not of type {typeof(T)}");
+                throw new Exception($"Document is not of type {typeof(T)}");
             
             base.AssignDocument(document);
         }

@@ -8,7 +8,7 @@ namespace Utility
         {
             Rect rect = viewport.rect;
             
-            Vector2 normalizedScreenPoint = new Vector2(
+            Vector2 normalizedScreenPoint = new(
                 (screenPoint.x - rect.x + rect.xMin) / (rect.width * viewport.lossyScale.x),
                 (screenPoint.y - rect.y + rect.yMin) / (rect.height * viewport.lossyScale.y)
             );

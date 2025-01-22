@@ -11,15 +11,14 @@ namespace Gameplay.Persons
             new[] {"Andrew", "Anthony", "Charles", "Christopher", "Daniel", "David", "Donald", "James", "John", "Joseph", "Joshua", "Mark", "Matthew", "Michael", "Paul", "Richard", "Robert", "Steven", "Thomas", "William"},
             new[] {"Barbara", "Betty", "Donna", "Dorothy", "Elizabeth", "Helen", "Jennifer", "Karen", "Lisa", "Linda", "Margaret", "Maria", "Mary", "Michelle", "Nancy", "Patricia", "Ruth", "Sandra", "Sharon", "Susan"}
         };
-        private readonly string[] m_LastNames = new[]
-        {
+        private readonly string[] m_LastNames = {
             "Anderson", "Brown", "Davis", "Garcia", "Gonzalez", "Hernandez", "Jackson", "Johnson", "Jones", "Lopez", "Martin", "Martinez", "Miller", "Moore", "Rodriguez", "Smith", "Taylor", "Thomas", "Williams", "Wilson"
         };
         
         
         public PersonName GetRandomName(PersonGender gender)
         {
-            return new PersonName()
+            return new PersonName
             {
                 FirstNameIndex = Random.Range(0, m_FirstNames[(int)gender].Length),
                 LastNameIndex  = Random.Range(0, m_LastNames.Length)

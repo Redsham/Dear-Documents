@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
-using UnityEngine.Localization.Settings;
 
 namespace Gameplay.Persons.Data
 {

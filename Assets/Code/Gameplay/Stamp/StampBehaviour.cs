@@ -1,12 +1,10 @@
-using Content.Person.Documents;
 using Gameplay.Items;
-using Gameplay.Items.Documents;
 using UI.Gameplay;
 using UnityEngine;
 using Utility;
 using VContainer;
 
-namespace Gameplay
+namespace Gameplay.Stamp
 {
     public class StampBehaviour : MonoBehaviour
     {
@@ -22,8 +20,11 @@ namespace Gameplay
             m_ApprovedStamp.OnStamp += bounds => Stamp(bounds, true);
             m_RejectedStamp.OnStamp += bounds => Stamp(bounds, false);
         }
-        public void Stamp(Bounds2D stampZone, bool approved)
+        
+        private void Stamp(Bounds2D stampZone, bool approved)
         {
+            DecisionOnEntry decision = approved ? DecisionOnEntry.Approved : DecisionOnEntry.Denied;
+            
             // Find the topmost item in the stamp zone
             ItemBehaviour target = null;
             foreach (ItemBehaviour item in m_ItemsManager.Items)
@@ -48,8 +49,11 @@ namespace Gameplay
             stampMark.Construct(approved);
             
             // Mark passport
-            if (target is DocumentBehaviour { Document: Passport passport })
-                passport.DecisionOnEntry = approved ? DecisionOnEntry.Approved : DecisionOnEntry.Denied;
+            if (target is IStampable stampable)
+                stampable.DecisionOnEntry = decision;
+            
+            if (target is IOnStamped onStamped)
+                onStamped.OnStamped(decision);
         }
     }
 }

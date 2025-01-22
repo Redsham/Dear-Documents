@@ -1,10 +1,11 @@
+using System;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
-namespace Gameplay
+namespace Gameplay.Stamp
 {
     [RequireComponent(typeof(Image))]
     public class StampMark : MonoBehaviour
@@ -34,7 +35,7 @@ namespace Gameplay
             m_Text.text = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Game", approved ? "positive_decision" : "negative_decision");
         }
         
-        [System.Serializable]
+        [Serializable]
         private struct StampMarkData
         {
             public Sprite Sprite => m_Sprite;
