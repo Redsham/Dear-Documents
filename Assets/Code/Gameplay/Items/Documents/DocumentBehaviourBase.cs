@@ -17,6 +17,10 @@ namespace Gameplay.Items.Documents
                 renderer.AssignDocument(document);
         }
     }
+    public abstract class DocumentBehaviour<T> : DocumentBehaviourBase where T : Document
+    {
+        public new T Document => (T)base.Document;
+    }
     
     
     public interface IOnDocumentAssigned

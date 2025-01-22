@@ -14,9 +14,9 @@ namespace Gameplay.Items.Renderers
         private SpriteRenderer m_SpriteRenderer;
         private SpriteRenderer m_ShadowRenderer;
         
-        private float        m_FakeHeight;
-        private MotionHandle m_MotionHandle;
+        private float        m_Elevation;
         private Vector3      m_OriginPosition;
+        private MotionHandle m_MotionHandle;
 
         
         private void Awake()
@@ -34,7 +34,7 @@ namespace Gameplay.Items.Renderers
         }
         public override void OnTransition(bool isDragging)
         {
-            m_FakeHeight = isDragging ? MAX_HEIGHT : 0.0f;
+            m_Elevation = isDragging ? MAX_HEIGHT : 0.0f;
             
             m_ShadowRenderer.gameObject.SetActive(isDragging);
             m_ShadowRenderer.color = new Color(0.0f, 0.0f, 0.0f, isDragging ? 0.5f : 1.0f);
@@ -56,7 +56,7 @@ namespace Gameplay.Items.Renderers
                                     .WithEase(Ease.OutCubic)
                                     .Bind(time =>
                                     {
-                                        m_FakeHeight       = time * MAX_HEIGHT;
+                                        m_Elevation       = time * MAX_HEIGHT;
                                         
                                         transform.rotation   = Quaternion.Lerp(rotation, Quaternion.identity, time);
                                         transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 1.1f, time);
@@ -82,8 +82,8 @@ namespace Gameplay.Items.Renderers
         
         private void ApplyPosition()
         {
-            transform.position                  = m_OriginPosition + new Vector3(0.0f, m_FakeHeight);
-            m_ShadowRenderer.transform.position = m_OriginPosition - new Vector3(0.0f, m_FakeHeight);
+            transform.position                  = m_OriginPosition + new Vector3(0.0f, m_Elevation);
+            m_ShadowRenderer.transform.position = m_OriginPosition - new Vector3(0.0f, m_Elevation);
         }
 
         #endregion
@@ -102,11 +102,11 @@ namespace Gameplay.Items.Renderers
             m_ShadowRenderer.gameObject.SetActive(true);
             
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, duration)
-                                    .WithEase(Ease.OutCubic)
+                                    .WithEase(Ease.InCubic)
                                     .WithOnComplete(() => m_ShadowRenderer.gameObject.SetActive(false))
                                     .Bind(time =>
                                     {
-                                        m_FakeHeight = (1.0f - time) * MAX_HEIGHT;
+                                        m_Elevation = (1.0f - time) * MAX_HEIGHT;
 
                                         transform.rotation   = Quaternion.Euler(0.0f, 0.0f, angle * time);
                                         transform.localScale = Vector3.Lerp(Vector3.one * 1.1f, Vector3.one, time);
@@ -133,7 +133,7 @@ namespace Gameplay.Items.Renderers
                                     .WithEase(Ease.InExpo)
                                     .Bind(time =>
                                     {
-                                        m_FakeHeight       = time * MAX_HEIGHT;
+                                        m_Elevation       = time * MAX_HEIGHT;
                                         
                                         transform.rotation   = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0.0f, 0.0f, 180.0f), time);
                                         transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, time);

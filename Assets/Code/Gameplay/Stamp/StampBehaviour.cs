@@ -1,4 +1,5 @@
 using Gameplay.Items;
+using Gameplay.Items.Documents;
 using UI.Gameplay;
 using UnityEngine;
 using Utility;
@@ -49,10 +50,10 @@ namespace Gameplay.Stamp
             stampMark.Construct(approved);
             
             // Mark passport
-            if (target is IStampable stampable)
+            if (target is DocumentBehaviourBase { Document: IStampable stampable })
                 stampable.DecisionOnEntry = decision;
             
-            if (target is IOnStamped onStamped)
+            if (target is DocumentBehaviourBase { Document: IOnStamped onStamped })
                 onStamped.OnStamped(decision);
         }
     }

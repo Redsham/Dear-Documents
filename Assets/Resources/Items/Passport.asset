@@ -15,4 +15,4 @@ MonoBehaviour:
   m_ScenePrefab: {fileID: 6651492913253775298, guid: d7d021845e2f8df438cdd78d302d127d, type: 3}
   m_TablePrefab: {fileID: 9049356420850821102, guid: b5af02bc35a30564d8c163abce962e8b, type: 3}
   m_BehaviourReference:
-    TypeName: Gameplay.Items.Documents.DocumentBehaviour
+    TypeName: Gameplay.Items.Documents.DocumentBehaviourBase

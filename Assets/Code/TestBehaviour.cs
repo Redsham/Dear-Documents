@@ -1,8 +1,9 @@
+using Content.Person.Documents;
 using Cysharp.Threading.Tasks;
-using Gameplay;
 using Gameplay.Items;
 using Gameplay.Persons.Data;
 using Gameplay.Persons.Interfaces;
+using Gameplay.Stamp;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -14,8 +15,15 @@ public class TestBehaviour : MonoBehaviour
     private bool m_IsDropped;
     
     [Inject]
-    public void Construct(ItemsManager manager, IPersonBuilder personBuilder, ItemsDropper dropper)
+    public void Construct(ItemsMover mover, ItemsManager manager, ItemsDropper dropper, IPersonBuilder personBuilder)
     {
+        mover.CanReturnItem = _ =>
+        {
+            Passport passport = dropper.GetDocument<Passport>();
+            return passport is not { DecisionOnEntry: DecisionOnEntry.None };
+        };
+        mover.OnReturnItem += dropper.ReturnItem;
+        
         m_Dropper = dropper;
         m_Person = personBuilder.Build();
     }

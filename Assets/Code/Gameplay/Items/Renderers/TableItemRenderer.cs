@@ -29,13 +29,9 @@ namespace Gameplay.Items.Renderers
             // Lift animation
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.3f)
                                     .WithEase(Ease.OutCubic)
-                                    .Bind(time =>
-                                    {
-                                        transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 1.1f, time);
-                                    });
+                                    .Bind(time =>  transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 1.1f, time));
         }
         public override void Drag(Vector2 dragPosition, Vector2 dragOffset) => transform.position = dragPosition - dragOffset;
-
         public override void EndDrag(Vector2 dragPosition, Vector2 dragOffset)
         {
             // If there is an active motion, complete it
@@ -44,11 +40,8 @@ namespace Gameplay.Items.Renderers
             
             // Drop animation
             m_MotionHandle = LMotion.Create(0.0f, 1.0f, 0.1f)
-                                    .WithEase(Ease.OutCubic)
-                                    .Bind(time =>
-                                    {
-                                        transform.localScale = Vector3.Lerp(Vector3.one * 1.1f, Vector3.one, time);
-                                    });
+                                    .WithEase(Ease.InCubic)
+                                    .Bind(time => transform.localScale = Vector3.Lerp(Vector3.one * 1.1f, Vector3.one, time));
         }
 
         #endregion
