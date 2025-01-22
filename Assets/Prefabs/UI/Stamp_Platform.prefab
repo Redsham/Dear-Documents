@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e568133b07d49c98c9e5bd6648a985c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
   m_StampOffset: {x: 0, y: -34.7}
   m_StampArea: {fileID: 46719553507983874}
 --- !u!1 &1233371516080152305
@@ -230,6 +231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d80401f5ce4dd5a2d844eb01151127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StampDrawers:
+  - {fileID: 245351059751221108}
+  - {fileID: 8638873630204933718}
 --- !u!114 &4774475314988951553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e568133b07d49c98c9e5bd6648a985c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
   m_StampOffset: {x: 0, y: -34.7}
   m_StampArea: {fileID: 1015282364963057312}
 --- !u!1 &5300789000676326116

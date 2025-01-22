@@ -8,6 +8,8 @@ namespace UI.Gameplay
     {
         public const float ANIMATION_DURATION = 1.0f;
         
+        [SerializeField] private StampDrawer[] m_StampDrawers;
+        
         private RectTransform m_RectTransform;
         private Vector2 m_ClosedPosition;
         
@@ -27,8 +29,14 @@ namespace UI.Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if(m_IsOpened && eventData.pointerPress != gameObject)
+                return;
+            
             m_IsOpened = !m_IsOpened;
             m_IsMoving = true;
+            
+            foreach (StampDrawer drawer in m_StampDrawers)
+                drawer.Interactable = m_IsOpened;
             
             if (m_MotionHandle.IsActive())
                 m_MotionHandle.Cancel();
