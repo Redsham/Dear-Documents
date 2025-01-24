@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Content.Person.Documents
 {
-    public class WorkPass : Document
+    public class WorkPass : Document, INamedDocument, IExpirableDocument
     {
         public PersonName           Name           { get; set; }
         public DateTime             DateOfExpiry   { get; set; }
@@ -23,8 +23,8 @@ namespace Content.Person.Documents
         {
             return new List<Type>
             {
-                typeof(InconsistencyWorkPassName),
-                typeof(InconsistencyWorkPassExpired)
+                typeof(InconsistencyNameMismatch<WorkPass>),
+                typeof(InconsistencyExpiredDocument<WorkPass>)
             };
         }
         

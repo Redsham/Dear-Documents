@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Content.Person.Documents
 {
-    public class Passport : Document, IStampable
+    public class Passport : Document, IStampable, IExpirableDocument
     {
         public PersonName   Name        { get; set; }
         public PersonGender Gender      { get; set; }
@@ -32,7 +32,7 @@ namespace Content.Person.Documents
             return new List<Type>
             {
                 typeof(InconsistencyPassportGender),
-                typeof(InconsistencyExpiredPassport)
+                typeof(InconsistencyExpiredDocument<Passport>)
             };
         }
     }

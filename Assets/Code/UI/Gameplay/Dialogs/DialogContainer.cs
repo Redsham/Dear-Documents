@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using Gameplay.Dialogs;
-using LitMotion;
 using UnityEngine;
 using VContainer;
 
 namespace UI.Gameplay.Dialogs
 {
-    [ExecuteAlways]
     public class DialogContainer : MonoBehaviour
     {
         public RectTransform RectTransform { get; private set; }
@@ -45,6 +41,8 @@ namespace UI.Gameplay.Dialogs
             };
         }
 
+        #region Unity Methods
+
         private void Awake() => RectTransform = (RectTransform)transform;
         private void Start() => Prewarm();
         private void Update()
@@ -54,27 +52,9 @@ namespace UI.Gameplay.Dialogs
 
             UpdateTransforms();
         }
-        private void OnValidate() => UpdateTransforms();
 
-        private void UpdateTransforms()
-        {
-            float positionY = 0.0f;
-
-            for (int i = m_ActiveElements.Count - 1; i >= 0; i--)
-            {
-                DialogElement element     = m_ActiveElements[i];
-                RectTransform elementRect = element.RectTransform;
-
-                float side = element.Speaker == DialogSpeaker.Inspector ? 0.0f : 1.0f;
-
-                elementRect.anchorMin = elementRect.anchorMax = new Vector2(side, 0.0f);
-                elementRect.pivot     = new Vector2(side, 0.0f);
-
-                elementRect.anchoredPosition =  new Vector2(0.0f, positionY);
-                positionY                    += elementRect.rect.height * elementRect.localScale.y + RowsSpacing;
-            }
-        }
-
+        #endregion
+        
         #region Pool
 
         private void Prewarm()
@@ -116,6 +96,24 @@ namespace UI.Gameplay.Dialogs
 
         #endregion
 
+        private void UpdateTransforms()
+        {
+            float positionY = 0.0f;
+
+            for (int i = m_ActiveElements.Count - 1; i >= 0; i--)
+            {
+                DialogElement element     = m_ActiveElements[i];
+                RectTransform elementRect = element.RectTransform;
+
+                float side = element.Speaker == DialogSpeaker.Inspector ? 0.0f : 1.0f;
+
+                elementRect.anchorMin = elementRect.anchorMax = new Vector2(side, 0.0f);
+                elementRect.pivot     = new Vector2(side, 0.0f);
+
+                elementRect.anchoredPosition =  new Vector2(0.0f, positionY);
+                positionY                    += elementRect.rect.height * elementRect.localScale.y + RowsSpacing;
+            }
+        }
         
         private async UniTask Dialog()
         {

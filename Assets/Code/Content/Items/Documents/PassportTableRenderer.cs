@@ -22,7 +22,7 @@ namespace Content.Items.Documents
         
         public override void OnDocumentAssigned()
         {
-            m_FullName.text     = m_PersonNameService.GetFullName(Document.Name, Document.Gender);
+            m_FullName.text     = m_PersonNameService.GetFullName(Document.Name, Person.Gender);
             m_SerialNumber.text = Document.SerialNumber;
             m_DateOfBirth.text  = Document.DateOfBirth.ToString("dd.MM.yyyy");
             m_DateOfExpiry.text = Document.DateOfExpiry.ToString("dd.MM.yyyy");

@@ -26,7 +26,7 @@ namespace Gameplay.Persons
         }
         public PersonName GetWrongName(PersonName name, PersonGender gender)
         {
-            float        random        = Random.value;
+            float random = Random.value;
             
             switch (random)
             {

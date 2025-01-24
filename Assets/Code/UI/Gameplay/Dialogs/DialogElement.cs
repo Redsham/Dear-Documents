@@ -30,7 +30,7 @@ namespace UI.Gameplay.Dialogs
         {
             DialogContainer container       = GetComponentInParent<DialogContainer>();
             Vector2         preferredValues = m_Text.GetPreferredValues(container.MaxElementWidth - m_Padding.x * 2.0f, float.MaxValue);
-            float width = Mathf.Min(container.MaxElementWidth, preferredValues.x);
+            float width                     = Mathf.Min(container.MaxElementWidth, preferredValues.x);
 
             RectTransform.sizeDelta        = new Vector2(width, preferredValues.y) + m_Padding * 2.0f;
             m_Text.rectTransform.sizeDelta = -m_Padding * 2.0f;

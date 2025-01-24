@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Gameplay.Persons.Data;
 using Gameplay.Persons.Interfaces;
+using UnityEngine;
 using Utility;
 using VContainer;
 using Random = UnityEngine.Random;
@@ -52,6 +53,7 @@ namespace Gameplay.Persons
             {
                 GetInconsistency(person, out Document document, out Type inconsistencyType);
                 Inconsistency inconsistency = m_InconsistencyBuilder.Build(inconsistencyType, person, document);
+                Debug.Log($"Person has inconsistency: {inconsistency.GetType().Name}");
             }
             
             return person;
