@@ -47,8 +47,12 @@ namespace Gameplay.Persons
             ReasonOfEntry reason = m_ReasonOfEntryBuilder.Build(reasonType, person);
             
             // Generate random inconsistency
-            GetInconsistency(person, out Document document, out Type inconsistencyType);
-            Inconsistency inconsistency = m_InconsistencyBuilder.Build(inconsistencyType, person, document);
+            bool hasInconsistency = Random.value < 0.5f;
+            if (hasInconsistency)
+            {
+                GetInconsistency(person, out Document document, out Type inconsistencyType);
+                Inconsistency inconsistency = m_InconsistencyBuilder.Build(inconsistencyType, person, document);
+            }
             
             return person;
         }

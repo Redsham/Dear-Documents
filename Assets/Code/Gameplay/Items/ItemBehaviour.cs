@@ -7,12 +7,34 @@ namespace Gameplay.Items
 {
     public abstract class ItemBehaviour : MonoBehaviour
     {
+        /// <summary>
+        /// Layer of the item. Logic of drawing order in Renderers.
+        /// </summary>
         public int          Layer     { get; private set; }
+        /// <summary>
+        /// If true, the item is on the table.
+        /// </summary>
         public bool         IsOnTable { get; private set; }
+        /// <summary>
+        /// Renderer for current item state.
+        /// </summary>
         public ItemRenderer Renderer  => IsOnTable ? TableRenderer : SceneRenderer;
         
+        /// <summary>
+        /// Renderer for the item when it's in the scene.
+        /// </summary>
         public SceneItemRenderer SceneRenderer { get; private set; }
+        /// <summary>
+        /// Renderer for the item when it's on the table.
+        /// </summary>
         public TableItemRenderer TableRenderer { get; private set; }
+        
+        /// <summary>
+        /// If true, the item must be returned to the person before they leave.
+        /// </summary>
+        public bool ShouldReturn { get; set; }
+        
+        
         
         [Inject]
         public void Construct()

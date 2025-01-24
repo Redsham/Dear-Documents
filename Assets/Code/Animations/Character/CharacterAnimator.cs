@@ -40,8 +40,6 @@ namespace Animations.Character
         private CharacterPose m_PrevPose;
         private float         m_PoseTransition;
         
-        private UniTask m_IdleTask;
-
         private void Awake()
         {
             m_BodyPosition = m_Body.localPosition;
@@ -105,20 +103,16 @@ namespace Animations.Character
         {
             Vector2 startPosition = transform.position;
             
-            await m_IdleTask;
-            
             float distance = Vector2.Distance(startPosition, endPosition);
             float duration = distance / m_WalkSpeed;
             
             Pose = m_WalkPose;
             
             await LMotion.Create(0.0f, 1.0f, duration)
-                   .WithOnCancel(() => Pose   = m_IdlePose)
-                   .WithOnComplete(() => Pose = m_IdlePose)
-                   .Bind((time) =>
-                   {
-                       transform.position = Vector2.Lerp(startPosition, endPosition, time);
-                   }).ToUniTask();
+                         .WithEase(Ease.InOutSine)
+                         .WithOnCancel(() => Pose           = m_IdlePose)
+                         .WithOnComplete(() => Pose         = m_IdlePose)
+                         .Bind((time) => transform.position = Vector2.Lerp(startPosition, endPosition, time)).ToUniTask();
         }
     }
 }

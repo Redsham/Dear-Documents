@@ -25,6 +25,11 @@ namespace Utility
 
         [SerializeField] private Vector2 m_Extents = Vector2.one;
 
+#if UNITY_EDITOR
+        [SerializeField] private Color m_GizmosColor = Color.green;
+#endif
+        
+        
         public Vector2 GetRandomPoint()
         {
             Vector2 randomPoint = new(Random.Range(-m_Extents.x, m_Extents.x), Random.Range(-m_Extents.y, m_Extents.y));
@@ -56,7 +61,7 @@ namespace Utility
         private void OnDrawGizmosSelected()
         {
             Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.color = Color.green;
+            Gizmos.color  = m_GizmosColor;
             Gizmos.DrawWireCube(Vector3.zero, Size);
         }
         private void OnValidate()

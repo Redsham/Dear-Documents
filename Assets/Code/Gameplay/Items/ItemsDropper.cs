@@ -24,6 +24,8 @@ namespace Gameplay.Items
         public           IReadOnlyList<ItemBehaviour> Items => m_Items;
         private readonly List<ItemBehaviour>          m_Items = new();
         
+        public bool AllReturned => m_Items.Count == 0 || m_Items.TrueForAll(x => !x.ShouldReturn);
+        
         
         /// <summary>
         /// Drop all items from the person on table.
@@ -54,6 +56,7 @@ namespace Gameplay.Items
             
             m_Items.Add(behaviour);
             behaviour.SceneRenderer.DropFromPoint(m_DropPoint.position, m_DropArea.GetRandomPoint(), 0.3f);
+            behaviour.ShouldReturn = true;
             
             return behaviour;
         }
