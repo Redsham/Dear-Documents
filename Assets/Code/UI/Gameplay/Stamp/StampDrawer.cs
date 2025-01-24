@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Utility;
 
-namespace UI.Gameplay
+namespace UI.Gameplay.Stamp
 {
     public class StampDrawer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

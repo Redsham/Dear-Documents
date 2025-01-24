@@ -2,7 +2,7 @@ using LitMotion;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UI.Gameplay
+namespace UI.Gameplay.Stamp
 {
     public class StampPlatformDrawer : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {

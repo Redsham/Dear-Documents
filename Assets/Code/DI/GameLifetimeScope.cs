@@ -1,3 +1,4 @@
+using Gameplay.Dialogs;
 using Gameplay.Items;
 using Gameplay.Persons;
 using Gameplay.Persons.Interfaces;
@@ -21,6 +22,9 @@ namespace DI
             builder.Register<IReasonOfEntryBuilder, ReasonOfEntryBuilder>(Lifetime.Singleton);
             builder.Register<IPersonNameService, PersonNameService>(Lifetime.Singleton);
             builder.Register<IPersonBuilder, PersonBuilder>(Lifetime.Singleton);
+            
+            // Registering dialog services
+            builder.Register<DialogManager>(Lifetime.Singleton);
         }
     }
 }
