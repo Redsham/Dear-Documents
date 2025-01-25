@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Animations.Character
+namespace Character.Animations
 {
     public struct CharacterLimb
     {

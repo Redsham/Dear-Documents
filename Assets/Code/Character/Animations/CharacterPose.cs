@@ -1,4 +1,4 @@
-namespace Animations.Character
+namespace Character.Animations
 {
     public abstract class CharacterPose
     {

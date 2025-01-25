@@ -1,9 +1,9 @@
-using Animations.Character.Poses;
+using Character.Animations.Poses;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using UnityEngine;
 
-namespace Animations.Character
+namespace Character.Animations
 {
     [ExecuteAlways]
     public class CharacterAnimator : MonoBehaviour
@@ -58,6 +58,14 @@ namespace Animations.Character
 
             UpdatePose();
         }
+        private void OnDisable()
+        {
+            m_Body.localPosition = m_BodyPosition;
+            m_Body.localRotation = Quaternion.identity;
+            
+            m_Head.localPosition = m_HeadPosition;
+            m_Head.localRotation = Quaternion.identity;
+        }
 
         private void CreatePoses()
         {
@@ -100,7 +108,7 @@ namespace Animations.Character
             m_Head.localRotation = head.Rotation;
         }
         
-        public async UniTask Walk(Vector2 endPosition)
+        public async UniTask GoTo(Vector2 endPosition)
         {
             Vector2 startPosition = transform.position;
             
@@ -113,7 +121,7 @@ namespace Animations.Character
                          .WithEase(Ease.InOutSine)
                          .WithOnCancel(() => Pose           = m_IdlePose)
                          .WithOnComplete(() => Pose         = m_IdlePose)
-                         .Bind((time) => transform.position = Vector2.Lerp(startPosition, endPosition, time)).ToUniTask();
+                         .Bind(time => transform.position = Vector2.Lerp(startPosition, endPosition, time)).ToUniTask();
         }
     }
 }

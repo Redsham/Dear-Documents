@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Animations.Character.Poses
+namespace Character.Animations.Poses
 {
     public class IdlePose : CharacterPose
     {
