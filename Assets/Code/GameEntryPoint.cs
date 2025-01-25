@@ -7,8 +7,5 @@ public class GameEntryPoint : IPostStartable
 {
     [Inject] private GameStateManager m_GameStateManager;
         
-    public void PostStart()
-    {
-        m_GameStateManager.SetState(new WaitPersonState()).Forget();
-    }
+    public void PostStart() => m_GameStateManager.SetState(new WaitPersonState()).Forget();
 }

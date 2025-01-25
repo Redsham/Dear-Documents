@@ -45,9 +45,7 @@ namespace Character.Animations
         {
             m_BodyPosition = m_Body.localPosition;
             m_HeadPosition = m_Head.localPosition;
-        }
-        private void Start()
-        {
+            
             CreatePoses();
             m_Pose = m_IdlePose;
         }

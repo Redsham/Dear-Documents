@@ -16,47 +16,52 @@ namespace Gameplay.GameCycle
         private CancellationTokenSource m_CancellationTokenSource;
 
 
-        public async UniTaskVoid SetState(IGameState state)
+        public async UniTaskVoid SetState(IGameState initialState)
         {
-            // Cancel the current task if it is running
-            if (m_PreviousTaskIsRunning)
+            IGameState nextState = initialState;
+            
+            while(nextState != null)
             {
-                Debug.Log("Interrupting the current state");
+                // Cancel the current task if it is running
+                if (m_PreviousTaskIsRunning)
+                {
+                    Debug.Log("Interrupting the current state");
                 
-                m_CancellationTokenSource?.Cancel();
-                await UniTask.WaitWhile(() => m_PreviousTaskIsRunning);
-            }
+                    m_CancellationTokenSource?.Cancel();
+                    await UniTask.WaitWhile(() => m_PreviousTaskIsRunning);
+                }
             
-            if(m_CurrentState is IOnStateExit exitState)
-                exitState.OnStateExit();
+                if(m_CurrentState is IOnStateExit exitState)
+                    exitState.OnStateExit();
             
-            m_CancellationTokenSource?.Dispose();
-            m_CancellationTokenSource = new CancellationTokenSource();
+                m_CancellationTokenSource?.Dispose();
+                m_CancellationTokenSource = new CancellationTokenSource();
             
-            m_CurrentState = state;
-            m_Resolver.Inject(state);
+                m_CurrentState = nextState;
+                m_Resolver.Inject(nextState);
 
-            try
-            {
-                if (m_CurrentState is IOnStateEnter enterState)
-                    enterState.OnStateEnter();
+                try
+                {
+                    if (m_CurrentState is IOnStateEnter enterState)
+                        enterState.OnStateEnter();
                 
-                m_CurrentTask           = m_CurrentState.Handle(m_CancellationTokenSource.Token);
-                m_PreviousTaskIsRunning = true;
+                    m_CurrentTask           = m_CurrentState.Handle(m_CancellationTokenSource.Token);
+                    m_PreviousTaskIsRunning = true;
                 
-                IGameState nextState = await m_CurrentTask;
-                m_PreviousTaskIsRunning = false;
-                
-                if (!m_CancellationTokenSource.IsCancellationRequested && nextState != null)
-                    SetState(nextState).Forget();
-            }
-            catch (OperationCanceledException ex)
-            {
-                // Ignore the exception if the task was cancelled
-            }
-            catch(Exception ex)
-            {
-                Debug.LogError($"Error while entering state {m_CurrentState.GetType().Name}: {ex}");
+                    nextState               = await m_CurrentTask;
+                    m_PreviousTaskIsRunning = false;
+                    
+                    if(m_CancellationTokenSource.IsCancellationRequested)
+                        break;
+                }
+                catch (OperationCanceledException ex)
+                {
+                    // Ignore the exception if the task was cancelled
+                }
+                catch(Exception ex)
+                {
+                    Debug.LogError($"Error while entering state {m_CurrentState.GetType().Name}: {ex}");
+                }
             }
         }
     }
