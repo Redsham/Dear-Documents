@@ -83,6 +83,38 @@ MonoBehaviour:
     m_Key: negative_decision
     m_Metadata:
       m_Items: []
+  - m_Id: 4249174412353536
+    m_Key: entry_permit_subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4250771494264832
+    m_Key: entry_permit_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4269547858157568
+    m_Key: entry_permit_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4270390992953344
+    m_Key: entry_permit_passport_number
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4274549817335808
+    m_Key: entry_permit_purpose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4274946493636608
+    m_Key: entry_permit_duration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4275246189240320
+    m_Key: entry_permit_date
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4283989014601728
+    m_Key: entry_permity_days
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

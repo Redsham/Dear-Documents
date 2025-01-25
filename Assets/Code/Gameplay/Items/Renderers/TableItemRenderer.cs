@@ -6,7 +6,7 @@ namespace Gameplay.Items.Renderers
 {
     public class TableItemRenderer : ItemRenderer
     {
-        public RectTransform RectTransform;
+        public RectTransform RectTransform { get; private set; }
         
         private MotionHandle  m_MotionHandle;
 

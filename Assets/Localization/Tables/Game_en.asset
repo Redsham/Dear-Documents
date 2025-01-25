@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 77f59c693267456478797b84260d2ef9, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1133822470184763472
   m_TableData:
   - m_Id: 33872142336
     m_Localized: PUT THE DOCUMENT HERE
@@ -86,6 +87,45 @@ MonoBehaviour:
     m_Localized: Denied
     m_Metadata:
       m_Items: []
+  - m_Id: 4249174412353536
+    m_Localized: Ministry of Admission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4250771494264832
+    m_Localized: ENTRY PERMIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4269547858157568
+    m_Localized: 'The entry permit is valid for the person listed below:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4270390992953344
+    m_Localized: bearing passport number
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4274549817335808
+    m_Localized: Purpose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4274946493636608
+    m_Localized: Duration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4275246189240320
+    m_Localized: Enter by
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4283989014601728
+    m_Localized: '{0:p:one day|{} days}'
+    m_Metadata:
+      m_Items:
+      - rid: 1133822470184763472
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1133822470184763472
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 4283989014601728

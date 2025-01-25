@@ -1,4 +1,5 @@
 using System;
+using Content.Person.Documents;
 using Gameplay.Persons.Data;
 using Gameplay.Persons.Interfaces;
 using VContainer;
@@ -33,6 +34,22 @@ namespace Content.Person.Inconsistencies
         {
             IExpirableDocument expirableDocument = person.GetDocument<T>();
             expirableDocument.DateOfExpiry = InconsistencyUtils.GetExpiredDate();
+        }
+
+        public override void OnDiscovered(Gameplay.Persons.Data.Person person) { }
+    }
+    
+    
+    public interface IDocumentWithPassportNumber
+    {
+        public SerialNumber SerialNumber { get; set; }
+    }
+    public class InconsistencyPassportNumberMismatch<T> : Inconsistency where T : Document, IDocumentWithPassportNumber
+    {
+        public override void Construct(Gameplay.Persons.Data.Person person)
+        {
+            IDocumentWithPassportNumber documentWithPassportNumber = person.GetDocument<T>();
+            documentWithPassportNumber.SerialNumber = documentWithPassportNumber.SerialNumber.GetWrong();
         }
 
         public override void OnDiscovered(Gameplay.Persons.Data.Person person) { }

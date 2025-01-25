@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Animations.Character
 {
+    [ExecuteAlways]
     public class CharacterAnimator : MonoBehaviour
     {
         [SerializeField] private float m_PoseTransitionDuration = 0.1f;

@@ -14,7 +14,7 @@ namespace Content.Person.Documents
         public DateTime     DateOfBirth { get; set; }
         
         public DateTime DateOfExpiry { get; set; }
-        public string   SerialNumber { get; set; }
+        public SerialNumber   SerialNumber { get; set; }
         
         public DecisionOnEntry DecisionOnEntry { get; set; } = DecisionOnEntry.None;
         
@@ -25,14 +25,14 @@ namespace Content.Person.Documents
             Gender       = person.Gender;
             DateOfBirth  = person.BirthDate;
             DateOfExpiry = DateTime.Now + TimeSpan.FromDays(Random.Range(1, 365));
-            SerialNumber = $"{Random.Range(0, 10000):0000} {Random.Range(0, 1000000):000000}";
+            SerialNumber = SerialNumber.Generate();
         }
         public override IReadOnlyList<Type> GetInconsistencies()
         {
             return new List<Type>
             {
                 typeof(InconsistencyPassportGender),
-                typeof(InconsistencyExpiredDocument<Passport>)
+                typeof(InconsistencyExpiredDocument<Passport>),
             };
         }
     }
