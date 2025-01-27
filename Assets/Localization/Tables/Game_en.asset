@@ -120,6 +120,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1133822470184763472
+  - m_Id: 4384063442903040
+    m_Localized: 'Call the
+
+      next one'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4404310463995904
+    m_Localized: Next!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

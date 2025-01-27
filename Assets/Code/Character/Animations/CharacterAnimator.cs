@@ -1,3 +1,4 @@
+using System.Threading;
 using Character.Animations.Poses;
 using Cysharp.Threading.Tasks;
 using LitMotion;
@@ -106,7 +107,7 @@ namespace Character.Animations
             m_Head.localRotation = head.Rotation;
         }
         
-        public async UniTask GoTo(Vector2 endPosition)
+        public async UniTask GoTo(Vector2 endPosition, CancellationToken token = default)
         {
             Vector2 startPosition = transform.position;
             
@@ -119,7 +120,8 @@ namespace Character.Animations
                          .WithEase(Ease.InOutSine)
                          .WithOnCancel(() => Pose           = m_IdlePose)
                          .WithOnComplete(() => Pose         = m_IdlePose)
-                         .Bind(time => transform.position = Vector2.Lerp(startPosition, endPosition, time)).ToUniTask();
+                         .Bind(time => transform.position = Vector2.Lerp(startPosition, endPosition, time))
+                         .ToUniTask(token);
         }
     }
 }

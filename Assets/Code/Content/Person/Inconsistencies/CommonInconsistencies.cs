@@ -12,7 +12,7 @@ namespace Content.Person.Inconsistencies
     }
     public class InconsistencyNameMismatch<T> : Inconsistency where T : Document, INamedDocument
     {
-        [Inject] private IPersonNameService m_PersonNameService = null;
+        [Inject] private IPersonNameService m_PersonNameService;
         
         public override void Construct(Gameplay.Persons.Data.Person person)
         {

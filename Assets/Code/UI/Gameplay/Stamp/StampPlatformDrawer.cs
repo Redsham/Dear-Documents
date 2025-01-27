@@ -26,6 +26,11 @@ namespace UI.Gameplay.Stamp
             m_RectTransform = (RectTransform)transform;
             m_ClosedPosition = m_RectTransform.anchoredPosition;
         }
+        private void Start()
+        {
+            foreach (StampDrawer drawer in m_StampDrawers)
+                drawer.Interactable = m_IsOpened;
+        }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -35,11 +40,12 @@ namespace UI.Gameplay.Stamp
             m_IsOpened = !m_IsOpened;
             m_IsMoving = true;
             
+            // Update interactable state of stamps
             foreach (StampDrawer drawer in m_StampDrawers)
                 drawer.Interactable = m_IsOpened;
-            
-            if (m_MotionHandle.IsActive())
-                m_MotionHandle.Cancel();
+
+            // Cancel previous motion
+            m_MotionHandle.TryCancel();
             
             float duration = ANIMATION_DURATION * Mathf.Abs(m_Position - (m_IsOpened ? 1.0f : 0.0f));
             m_MotionHandle = LMotion.Create(m_Position, m_IsOpened ? 1.0f : 0.0f, duration)
@@ -74,8 +80,7 @@ namespace UI.Gameplay.Stamp
                 return;
             
             // Cancel previous motion
-            if (m_MotionHandle.IsActive())
-                m_MotionHandle.Cancel();
+            m_MotionHandle.TryCancel();
 
             float targetPosition = isHovered ? 0.05f : 0.0f;
             float duration       = Mathf.Abs(m_Position - targetPosition) * ANIMATION_DURATION * 2.0f;

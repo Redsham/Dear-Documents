@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Character;
 using Content.Person.Documents;
@@ -17,10 +18,15 @@ namespace Content.GameStates
         
         public async UniTask<IGameState> Handle(CancellationToken cancellation)
         {
+            // Drop all items from the person
             await m_Dropper.DropAll(m_Character.Person);
-            await UniTask.WaitUntil(() => m_Dropper.AllReturned, cancellationToken: cancellation);
+            
+            // Wait while the player is inspecting the person
+            try { await UniTask.WaitUntil(() => m_Dropper.AllReturned, cancellationToken: cancellation); }
+            catch (OperationCanceledException) { return null; }
 
-            return new OutPersonState();
+            // Transition to the next state
+            return new ExitPersonState();
         }
 
         public void OnStateEnter()

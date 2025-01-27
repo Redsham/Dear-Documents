@@ -20,12 +20,12 @@ namespace Gameplay.GameCycle
         {
             IGameState nextState = initialState;
             
-            while(nextState != null)
+            while(nextState != null && m_CancellationTokenSource is not { IsCancellationRequested: true })
             {
                 // Cancel the current task if it is running
                 if (m_PreviousTaskIsRunning)
                 {
-                    Debug.Log("Interrupting the current state");
+                    Debug.Log($"Interrupting the {m_CurrentState.GetType().Name} state");
                 
                     m_CancellationTokenSource?.Cancel();
                     await UniTask.WaitWhile(() => m_PreviousTaskIsRunning);
@@ -51,10 +51,10 @@ namespace Gameplay.GameCycle
                     nextState               = await m_CurrentTask;
                     m_PreviousTaskIsRunning = false;
                     
-                    if(m_CancellationTokenSource.IsCancellationRequested)
-                        break;
+                    // If the task was cancelled, do not proceed to the next state
+                    if(m_CancellationTokenSource.IsCancellationRequested) nextState = null;
                 }
-                catch (OperationCanceledException ex)
+                catch (OperationCanceledException)
                 {
                     // Ignore the exception if the task was cancelled
                 }

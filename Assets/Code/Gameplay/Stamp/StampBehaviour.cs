@@ -1,6 +1,5 @@
 using Gameplay.Items;
 using Gameplay.Items.Documents;
-using UI.Gameplay;
 using UI.Gameplay.Stamp;
 using UnityEngine;
 using Utility;

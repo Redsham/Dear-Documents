@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 4774475314988951553}
   - component: {fileID: 2305559784486450524}
   m_Layer: 5
-  m_Name: Stamp_Platform
+  m_Name: StampPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
