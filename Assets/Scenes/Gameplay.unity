@@ -208,7 +208,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.6
   m_Color: {r: 1, g: 0.7029483, b: 0.2971698, a: 1}
-  m_Intensity: 4.389639
+  m_Intensity: 4.6532516
   m_LightVolumeIntensity: 0
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: fdecb288
@@ -6545,7 +6545,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.6
   m_Color: {r: 1, g: 0.7029483, b: 0.2971698, a: 1}
-  m_Intensity: 4.428134
+  m_Intensity: 3.9861631
   m_LightVolumeIntensity: 0.3
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -7531,10 +7531,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1477222220}
     m_Modifications:
-    - target: {fileID: 245351059751221108, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
-      propertyPath: m_StampBehaviour
-      value: 
-      objectReference: {fileID: 1431901251090659469}
     - target: {fileID: 509348131918757723, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -7561,7 +7557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 509348131918757723, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 680.80414
+      value: 802.456
       objectReference: {fileID: 0}
     - target: {fileID: 509348131918757723, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
       propertyPath: m_SizeDelta.y
@@ -7597,7 +7593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 509348131918757723, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 628
+      value: 749.4
       objectReference: {fileID: 0}
     - target: {fileID: 509348131918757723, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7619,26 +7615,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stamp
       objectReference: {fileID: 0}
-    - target: {fileID: 8638873630204933718, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
-      propertyPath: m_StampBehaviour
-      value: 
-      objectReference: {fileID: 1431901251090659469}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
---- !u!114 &1431901251090659469 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4774475314988951553, guid: c3b635fec4abf8e4d99c8f18eb0ff0e5, type: 3}
-  m_PrefabInstance: {fileID: 1431901251090659468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653249903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f120f9e04aab421997a69e25ca2dfae2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2161419466849491165
 PrefabInstance:
   m_ObjectHideFlags: 0
