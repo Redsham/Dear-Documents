@@ -31,8 +31,10 @@ namespace Content.GameStates
 
         public void OnStateEnter()
         {
-            m_Mover.CanReturnItem = _ =>
+            m_Mover.CanReturnItem = item =>
             {
+                if (!item.ShouldReturn) return false;
+                
                 Passport passport = m_Dropper.GetDocument<Passport>();
                 return passport is not { DecisionOnEntry: DecisionOnEntry.None };
             };

@@ -1,7 +1,9 @@
 using Character;
+using Content;
 using Gameplay.Dialogs;
 using Gameplay.GameCycle;
 using Gameplay.Items;
+using Gameplay.Items.Citations;
 using Gameplay.Persons;
 using Gameplay.Persons.Interfaces;
 using UI.Gameplay;
@@ -18,6 +20,7 @@ namespace DI
             builder.RegisterComponentInHierarchy<ItemsManager>();
             builder.RegisterComponentInHierarchy<ItemsMover>();
             builder.RegisterComponentInHierarchy<ItemsDropper>();
+            builder.RegisterComponentInHierarchy<CitationPrinter>();
             
             // Registering person services
             builder.Register<IDocumentBuilder, DocumentBuilder>(Lifetime.Singleton);
@@ -25,14 +28,21 @@ namespace DI
             builder.Register<IReasonOfEntryBuilder, ReasonOfEntryBuilder>(Lifetime.Singleton);
             builder.Register<IPersonNameService, PersonNameService>(Lifetime.Singleton);
             builder.Register<IPersonBuilder, PersonBuilder>(Lifetime.Singleton);
-
+            
+            // Registering game cycle services
+            builder.Register<GameStateMachine>(Lifetime.Singleton);
+            builder.Register<IGameSession, GameSession>(Lifetime.Singleton);
+            
+            // Registering character
             builder.RegisterComponentInHierarchy<CharacterBehaviour>();
             
+            // Registering dialog manager
             builder.Register<DialogManager>(Lifetime.Singleton);
-            builder.Register<GameStateManager>(Lifetime.Singleton);
 
+            // Registering UI components
             builder.RegisterComponentInHierarchy<CallNextButton>();
             
+            // Registering game entry point
             builder.RegisterEntryPoint<GameEntryPoint>();
         }
     }

@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 public class GameEntryPoint : IPostStartable
 {
-    [Inject] private GameStateManager m_GameStateManager;
+    [Inject] private GameStateMachine m_GameStateMachine;
         
-    public void PostStart() => m_GameStateManager.SetState(new WaitPersonState()).Forget();
+    public void PostStart() => m_GameStateMachine.SetState(new WaitPersonState()).Forget();
 }

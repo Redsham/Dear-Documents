@@ -10,10 +10,9 @@ namespace Code.Gameplay.Items.Editor
     [CustomPropertyDrawer(typeof(ItemBehaviourReference))]
     public sealed class ItemBehaviourReferencePropertyDrawer : PropertyDrawer
     {
-        private static string GetLabel(Type type) => $"{type.Namespace}/{type.Name}";
         private static string[] GetAllTypeNames()
         {
-            return new List<string> { "None" }
+            return new List<string> { "None", typeof(ItemBehaviour).FullName }
                    .Concat(TypeCache.GetTypesDerivedFrom<ItemBehaviour>()
                                     .Where(type => !type.IsAbstract)
                                     .Select(type => type.FullName))

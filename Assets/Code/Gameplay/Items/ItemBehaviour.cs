@@ -5,7 +5,7 @@ using VContainer;
 
 namespace Gameplay.Items
 {
-    public abstract class ItemBehaviour : MonoBehaviour
+    public class ItemBehaviour : MonoBehaviour
     {
         /// <summary>
         /// Layer of the item. Logic of drawing order in Renderers.
@@ -33,6 +33,10 @@ namespace Gameplay.Items
         /// If true, the item must be returned to the person before they leave.
         /// </summary>
         public bool ShouldReturn { get; set; }
+        /// <summary>
+        /// If true, the item can be dragged.
+        /// </summary>
+        public bool IsDraggable { get; set; } = true;
         
         
         

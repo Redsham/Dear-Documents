@@ -6,7 +6,7 @@ using VContainer;
 
 namespace Gameplay.GameCycle
 {
-    public class GameStateManager
+    public class GameStateMachine
     {
         [Inject] private readonly IObjectResolver m_Resolver;
 
@@ -16,17 +16,15 @@ namespace Gameplay.GameCycle
         private CancellationTokenSource m_CancellationTokenSource;
 
 
-        public async UniTaskVoid SetState(IGameState initialState)
+        public async UniTaskVoid SetState(IGameState toState)
         {
-            IGameState nextState = initialState;
+            IGameState nextState = toState;
             
             while(nextState != null && m_CancellationTokenSource is not { IsCancellationRequested: true })
             {
                 // Cancel the current task if it is running
                 if (m_PreviousTaskIsRunning)
                 {
-                    Debug.Log($"Interrupting the {m_CurrentState.GetType().Name} state");
-                
                     m_CancellationTokenSource?.Cancel();
                     await UniTask.WaitWhile(() => m_PreviousTaskIsRunning);
                 }

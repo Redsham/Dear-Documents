@@ -36,14 +36,12 @@ namespace UI.Gameplay
 
         private void Awake()
         {
-            LocalizationSettings.SelectedLocaleChanged += _ => RefreshLocalizable().Forget();
+            LocalizationSettings.SelectedLocaleChanged += BeginRefreshLocalizable;
             RefreshLocalizable().Forget();
         }
-        private void OnDestroy()
-        {
-            LocalizationSettings.SelectedLocaleChanged -= _ => RefreshLocalizable();
-        }
+        private void OnDestroy() => LocalizationSettings.SelectedLocaleChanged -= BeginRefreshLocalizable;
 
+        private void BeginRefreshLocalizable(Locale locale) => RefreshLocalizable().Forget();
         private async UniTask RefreshLocalizable()
         {
             await LocalizationSettings.InitializationOperation;
@@ -116,7 +114,7 @@ namespace UI.Gameplay
                                    .Insert(0.2f, textHandle)
                                    .Run();
         }
-        public void Hide()
+        private void Hide()
         {
             m_MotionHandle.TryComplete();
             

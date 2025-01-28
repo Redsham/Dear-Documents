@@ -119,6 +119,10 @@ namespace Gameplay.Items
             
             foreach (ItemBehaviour item in items)
             {
+                // Skip items that are not draggable
+                if (!item.IsDraggable) 
+                    continue;
+                
                 // Skip items that are not on the table
                 if(item.IsOnTable != m_OnTable)
                     continue;
