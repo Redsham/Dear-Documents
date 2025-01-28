@@ -42,7 +42,7 @@ namespace Content.Items.Documents
             m_DateOfExpiry.text = await m_LocalizedDateFormat.GetLocalizedStringAsync(Document.DateOfExpiry);
             m_Specialization.text = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync(
                 "Specializations", 
-                "spec_" + TextUtils.CamelToSnake(Document.Specialization.ToString().ToLower())
+                "spec_" + TextUtils.CamelToSnake(Document.Specialization.ToString())
             );
         }
     }

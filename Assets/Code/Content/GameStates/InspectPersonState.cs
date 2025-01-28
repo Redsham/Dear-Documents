@@ -18,9 +18,6 @@ namespace Content.GameStates
         
         public async UniTask<IGameState> Handle(CancellationToken cancellation)
         {
-            // Drop all items from the person
-            await m_Dropper.DropAll(m_Character.Person);
-            
             // Wait while the player is inspecting the person
             try { await UniTask.WaitUntil(() => m_Dropper.AllReturned, cancellationToken: cancellation); }
             catch (OperationCanceledException) { return null; }

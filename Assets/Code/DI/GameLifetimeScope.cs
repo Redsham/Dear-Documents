@@ -1,12 +1,12 @@
 using Character;
 using Content;
-using Gameplay.Dialogs;
 using Gameplay.GameCycle;
 using Gameplay.Items;
 using Gameplay.Items.Citations;
 using Gameplay.Persons;
 using Gameplay.Persons.Interfaces;
 using UI.Gameplay;
+using UI.Gameplay.Dialogs;
 using VContainer;
 using VContainer.Unity;
 
@@ -36,10 +36,8 @@ namespace DI
             // Registering character
             builder.RegisterComponentInHierarchy<CharacterBehaviour>();
             
-            // Registering dialog manager
-            builder.Register<DialogManager>(Lifetime.Singleton);
-
             // Registering UI components
+            builder.RegisterComponentInHierarchy<DialogManager>();
             builder.RegisterComponentInHierarchy<CallNextButton>();
             
             // Registering game entry point

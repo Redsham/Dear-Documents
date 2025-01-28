@@ -1,4 +1,4 @@
-namespace Gameplay.Dialogs
+namespace UI.Gameplay.Dialogs
 {
     public readonly struct DialogMessage
     {

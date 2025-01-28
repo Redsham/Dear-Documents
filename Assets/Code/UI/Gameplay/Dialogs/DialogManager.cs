@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Gameplay.Dialogs;
 using UnityEngine;
-using VContainer;
 
 namespace UI.Gameplay.Dialogs
 {
-    public class DialogContainer : MonoBehaviour
+    public class DialogManager : MonoBehaviour
     {
         public RectTransform RectTransform { get; private set; }
 
@@ -24,22 +22,6 @@ namespace UI.Gameplay.Dialogs
         private readonly Queue<DialogElement> m_ElementsPool   = new();
 
         private DialogManager m_Manager;
-        private bool          m_DialogInProgress;
-
-
-        [Inject]
-        public void Construct(DialogManager manager)
-        {
-            m_Manager = manager;
-
-            manager.OnMessageAdded += _ =>
-            {
-                if (m_DialogInProgress)
-                    return;
-                
-                Dialog().Forget();
-            };
-        }
 
         #region Unity Methods
 
@@ -115,25 +97,17 @@ namespace UI.Gameplay.Dialogs
             }
         }
         
-        private async UniTask Dialog()
+        public async UniTask ShowDialog(DialogMessage[] messages)
         {
-            m_DialogInProgress = true;
-
-            while (m_Manager.HasMessages() || m_ActiveElements.Count > 0)
+            foreach (DialogMessage message in messages)
             {
-                if (m_Manager.HasMessages())
-                {
-                    DialogMessage message = m_Manager.PopMessage();
-                    ShowMessage(message).Forget();
-                    await UniTask.WaitForSeconds(0.2f);
-                }
-                else
-                    await UniTask.Yield();
+                ShowMessage(message).Forget();
+                await UniTask.WaitForSeconds(0.25f);
             }
             
-            m_DialogInProgress = false;
+            await UniTask.WaitUntil(() => m_ActiveElements.Count == 0);
         }
-        private async UniTask ShowMessage(DialogMessage message)
+        public async UniTask ShowMessage(DialogMessage message)
             {
                 DialogElement element = GetElement();
                 element.Message = message;

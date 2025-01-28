@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
-using Gameplay.Dialogs;
 using LitMotion;
+using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 
@@ -28,9 +28,9 @@ namespace UI.Gameplay.Dialogs
         private void Awake() => RectTransform = (RectTransform)transform;
         private void Apply()
         {
-            DialogContainer container       = GetComponentInParent<DialogContainer>();
-            Vector2         preferredValues = m_Text.GetPreferredValues(container.MaxElementWidth - m_Padding.x * 2.0f, float.MaxValue);
-            float width                     = Mathf.Min(container.MaxElementWidth, preferredValues.x);
+            DialogManager manager       = GetComponentInParent<DialogManager>();
+            Vector2         preferredValues = m_Text.GetPreferredValues(manager.MaxElementWidth - m_Padding.x * 2.0f, float.MaxValue);
+            float width                     = Mathf.Min(manager.MaxElementWidth, preferredValues.x);
 
             RectTransform.sizeDelta        = new Vector2(width, preferredValues.y) + m_Padding * 2.0f;
             m_Text.rectTransform.sizeDelta = -m_Padding * 2.0f;
@@ -48,7 +48,7 @@ namespace UI.Gameplay.Dialogs
         }
         public async UniTask Hide()
         {
-            await LMotion.Create(0.0f, 1.0f, 0.3f)
+            await LMotion.Create(0.0f, 1.0f, 0.2f)
                           .WithEase(Ease.OutCubic)
                           .Bind(time => RectTransform.localScale = Vector3.one * (1.0f - time));
         }

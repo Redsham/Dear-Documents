@@ -23,7 +23,7 @@ namespace Content.GameStates
             await m_Character.Animator.GoTo(Vector2.zero, cancellation);
             
             // Transition to the next state
-            return new InspectPersonState();
+            return new WelcomePersonState();
         }
     }
 }
