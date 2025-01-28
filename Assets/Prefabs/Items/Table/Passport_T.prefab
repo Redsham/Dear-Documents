@@ -197,13 +197,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85905fe544b94e148f1df19a3fd3c70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RectTransform: {fileID: 0}
   m_FullName: {fileID: 7054267901395444855}
   m_SerialNumber: {fileID: 7521993607600332398}
   m_Gender: {fileID: 6315937552795545578}
   m_DateOfBirth: {fileID: 4617657520535917769}
   m_DateOfExpiry: {fileID: 5683492098099465648}
   m_PlaceOfIssue: {fileID: 178701103276452194}
+  m_LocalizedGender:
+    m_TableReference:
+      m_TableCollectionName: GUID:77f59c693267456478797b84260d2ef9
+    m_TableEntryReference:
+      m_KeyId: 1833391652593664
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_LocalizedDateFormat:
+    m_TableReference:
+      m_TableCollectionName: GUID:92b50e82a76cf794db0ef35f777fbfef
+    m_TableEntryReference:
+      m_KeyId: 3975143424
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!222 &7194988254503817676
 CanvasRenderer:
   m_ObjectHideFlags: 0

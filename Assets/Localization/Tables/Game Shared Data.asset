@@ -56,11 +56,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1833391652593664
-    m_Key: gender_male
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1833419318222848
-    m_Key: gender_female
+    m_Key: gender
     m_Metadata:
       m_Items: []
   - m_Id: 1836430165794816
@@ -121,6 +117,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4404310463995904
     m_Key: next_bttn_clicked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5127902713602048
+    m_Key: citations
     m_Metadata:
       m_Items: []
   m_Metadata:

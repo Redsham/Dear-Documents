@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 1133822470184763472
   m_TableData:
   - m_Id: 33872142336
-    m_Localized: PUT THE DOCUMENT HERE
+    m_Localized: Put the document here
     m_Metadata:
       m_Items: []
   - m_Id: 1063069286391808
@@ -60,13 +60,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1833391652593664
-    m_Localized: M
+    m_Localized: '{0:choose(male|female):M|F}'
     m_Metadata:
-      m_Items: []
-  - m_Id: 1833419318222848
-    m_Localized: F
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1133822470184763472
   - m_Id: 1836430165794816
     m_Localized: Date of expiry
     m_Metadata:
@@ -92,7 +89,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4250771494264832
-    m_Localized: ENTRY PERMIT
+    m_Localized: Entry permit
     m_Metadata:
       m_Items: []
   - m_Id: 4269547858157568
@@ -130,6 +127,12 @@ MonoBehaviour:
     m_Localized: Next!
     m_Metadata:
       m_Items: []
+  - m_Id: 5127902713602048
+    m_Localized: '{0:choose(first|last|fired):First warning|Last warning|You''re
+      fired!}'
+    m_Metadata:
+      m_Items:
+      - rid: 1133822470184763472
   references:
     version: 2
     RefIds:
@@ -139,3 +142,5 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 4283989014601728
+        - id: 1833391652593664
+        - id: 5127902713602048

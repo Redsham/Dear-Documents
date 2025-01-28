@@ -106,9 +106,9 @@ MonoBehaviour:
   m_TitleText: {fileID: 5048697170223603202}
   m_LocalizedTitle:
     m_TableReference:
-      m_TableCollectionName: GUID:00b3eb0a601940a478ec61e4f9a9418b
+      m_TableCollectionName: GUID:77f59c693267456478797b84260d2ef9
     m_TableEntryReference:
-      m_KeyId: 5275377664
+      m_KeyId: 5127902713602048
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

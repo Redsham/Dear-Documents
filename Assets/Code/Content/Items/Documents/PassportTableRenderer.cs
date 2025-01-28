@@ -1,9 +1,11 @@
+using System;
 using Content.Person.Documents;
 using Cysharp.Threading.Tasks;
 using Gameplay.Items.Documents;
 using Gameplay.Persons.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using VContainer;
 
@@ -18,24 +20,30 @@ namespace Content.Items.Documents
         [SerializeField] private TextMeshProUGUI m_DateOfExpiry;
         [SerializeField] private TextMeshProUGUI m_PlaceOfIssue;
         
+        [Header("Localization")]
+        [SerializeField] private LocalizedString m_LocalizedGender;
+        [SerializeField] private LocalizedString m_LocalizedDateFormat;
+        
         [Inject] private IPersonNameService m_PersonNameService;
         
         public override void OnDocumentAssigned()
         {
             m_FullName.text     = m_PersonNameService.GetFullName(Document.Name, Person.Gender);
             m_SerialNumber.text = Document.SerialNumber;
-            m_DateOfBirth.text  = Document.DateOfBirth.ToString("dd.MM.yyyy");
-            m_DateOfExpiry.text = Document.DateOfExpiry.ToString("dd.MM.yyyy");
 
-            LocalizationSettings.SelectedLocaleChanged += _ => RefreshLocalizable().Forget();
-            RefreshLocalizable().Forget();
+            LocalizationSettings.SelectedLocaleChanged += BeginRefreshLocalizable;
+            BeginRefreshLocalizable(LocalizationSettings.SelectedLocale);
         }
+        private void OnDestroy() => LocalizationSettings.SelectedLocaleChanged -= BeginRefreshLocalizable;
 
+        private void BeginRefreshLocalizable(Locale locale) => RefreshLocalizable().Forget();
         private async UniTaskVoid RefreshLocalizable()
         {
             await LocalizationSettings.InitializationOperation;
             
-            m_Gender.text = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Game", "gender_" + Document.Gender.ToString().ToLower());
+            m_DateOfBirth.text  = await m_LocalizedDateFormat.GetLocalizedStringAsync(Document.DateOfBirth);
+            m_DateOfExpiry.text = await m_LocalizedDateFormat.GetLocalizedStringAsync(Document.DateOfExpiry);
+            m_Gender.text       = await m_LocalizedGender.GetLocalizedStringAsync(Document.Gender.ToString().ToLower());
         }
     }
 }

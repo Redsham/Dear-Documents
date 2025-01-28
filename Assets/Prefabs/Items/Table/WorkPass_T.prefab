@@ -67,6 +67,18 @@ MonoBehaviour:
   m_FullName: {fileID: 7054267901395444855}
   m_Specialization: {fileID: 7521993607600332398}
   m_DateOfExpiry: {fileID: 4617657520535917769}
+  m_LocalizedDateFormat:
+    m_TableReference:
+      m_TableCollectionName: GUID:92b50e82a76cf794db0ef35f777fbfef
+    m_TableEntryReference:
+      m_KeyId: 3975143424
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6441660458681403664
 MonoBehaviour:
   m_ObjectHideFlags: 0

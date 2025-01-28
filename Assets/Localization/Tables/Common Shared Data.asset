@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: Citations Shared Data
+  m_Name: Common Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: Citations
-  m_TableCollectionNameGuidString: 00b3eb0a601940a478ec61e4f9a9418b
+  m_TableCollectionName: Common
+  m_TableCollectionNameGuidString: 92b50e82a76cf794db0ef35f777fbfef
   m_Entries:
-  - m_Id: 5275377664
-    m_Key: citation_titles
+  - m_Id: 3975143424
+    m_Key: date_format
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 1133822520394252374
+    rid: 1133822520394252387
   references:
     version: 2
     RefIds:
-    - rid: 1133822520394252374
+    - rid: 1133822520394252387
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1738021680976
+        m_CustomEpoch: 1738025192175

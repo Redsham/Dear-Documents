@@ -1,9 +1,11 @@
+using System;
 using Content.Person.Documents;
 using Cysharp.Threading.Tasks;
 using Gameplay.Items.Documents;
 using Gameplay.Persons.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using Utility;
 using VContainer;
@@ -16,6 +18,9 @@ namespace Content.Items.Documents
         [SerializeField] private TextMeshProUGUI m_Specialization;
         [SerializeField] private TextMeshProUGUI m_DateOfExpiry;
         
+        [Header("Localization")]
+        [SerializeField] private LocalizedString m_LocalizedDateFormat;
+        
         [Inject] private IPersonNameService m_PersonNameService;
         
         
@@ -24,17 +29,20 @@ namespace Content.Items.Documents
             m_FullName.text     = m_PersonNameService.GetFullName(Document.Name, Person.Gender);
             m_DateOfExpiry.text = Document.DateOfExpiry.ToString("dd.MM.yyyy");
             
-            RefreshLocalizable().Forget();
-            LocalizationSettings.SelectedLocaleChanged += _ => RefreshLocalizable().Forget();
+            LocalizationSettings.SelectedLocaleChanged += BeginRefreshLocalizable;
+            BeginRefreshLocalizable(LocalizationSettings.SelectedLocale);
         }
+        private void OnDestroy() => LocalizationSettings.SelectedLocaleChanged -= BeginRefreshLocalizable;
 
+        private void BeginRefreshLocalizable(Locale locale) => RefreshLocalizable().Forget();
         private async UniTaskVoid RefreshLocalizable()
         {
             await LocalizationSettings.InitializationOperation;
             
+            m_DateOfExpiry.text = await m_LocalizedDateFormat.GetLocalizedStringAsync(Document.DateOfExpiry);
             m_Specialization.text = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync(
                 "Specializations", 
-                TextUtils.CamelToSnake(Document.Specialization.ToString())
+                "spec_" + TextUtils.CamelToSnake(Document.Specialization.ToString().ToLower())
             );
         }
     }

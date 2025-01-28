@@ -10,27 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Citations_en
+  m_Name: Common_en
   m_EditorClassIdentifier: 
   m_LocaleId:
     m_Code: en
-  m_SharedData: {fileID: 11400000, guid: 00b3eb0a601940a478ec61e4f9a9418b, type: 2}
+  m_SharedData: {fileID: 11400000, guid: 92b50e82a76cf794db0ef35f777fbfef, type: 2}
   m_Metadata:
     m_Items:
-    - rid: 1133822520394252385
+    - rid: 1133822520394252392
   m_TableData:
-  - m_Id: 5275377664
-    m_Localized: '{0:choose(first|last|fired):First warning|Last warning|You''re
-      fired!}'
+  - m_Id: 3975143424
+    m_Localized: '{0:MM.dd.yyyy}'
     m_Metadata:
       m_Items:
-      - rid: 1133822520394252385
+      - rid: 1133822520394252392
   references:
     version: 2
     RefIds:
-    - rid: 1133822520394252385
+    - rid: 1133822520394252392
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 
         m_SharedEntries:
-        - id: 5275377664
+        - id: 3975143424

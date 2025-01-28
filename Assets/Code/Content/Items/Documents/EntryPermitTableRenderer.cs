@@ -1,3 +1,4 @@
+using System;
 using Content.Person.Documents;
 using Cysharp.Threading.Tasks;
 using Gameplay.Items.Documents;
@@ -21,6 +22,7 @@ namespace Content.Items.Documents
 
         [Header("Localization")]
         [SerializeField] private LocalizedString m_LocalizedDuration;
+        [SerializeField] private LocalizedString m_LocalizedDateFormat;
         
         
         [Inject] private IPersonNameService m_PersonNameService;
@@ -30,12 +32,13 @@ namespace Content.Items.Documents
         {
             m_FullName.text       = m_PersonNameService.GetFullName(Document.Name, Person.Gender);
             m_PassportNumber.text = Document.SerialNumber;
-            m_DateOfExpiry.text   = Document.DateOfExpiry.ToString("dd.MM.yyyy");
             
-            LocalizationSettings.SelectedLocaleChanged += _ => RefreshLocalizable().Forget();
-            RefreshLocalizable().Forget();
+            LocalizationSettings.SelectedLocaleChanged += BeginRefreshLocalizable;
+            BeginRefreshLocalizable(LocalizationSettings.SelectedLocale);
         }
-        
+        private void OnDestroy() => LocalizationSettings.SelectedLocaleChanged -= BeginRefreshLocalizable;
+
+        private void BeginRefreshLocalizable(Locale locale) => RefreshLocalizable().Forget();
         private async UniTaskVoid RefreshLocalizable()
         {
             await LocalizationSettings.InitializationOperation;
@@ -43,9 +46,8 @@ namespace Content.Items.Documents
             string reasonKey = TextUtils.CamelToSnake(Document.ReasonOfEntry.Name.Replace("Reason", ""));
             m_ReasonOfEntry.text = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("ReasonsOfEntry", reasonKey);
             
-            m_LocalizedDuration.Arguments = new object[] { Document.Duration.Days };
-            m_LocalizedDuration.RefreshString();
-            m_Duration.text = m_LocalizedDuration.GetLocalizedString();
+            m_Duration.text = await m_LocalizedDuration.GetLocalizedStringAsync(Document.Duration.Days);
+            m_DateOfExpiry.text = await m_LocalizedDateFormat.GetLocalizedStringAsync(Document.DateOfExpiry);
         }
     }
 }

@@ -15,12 +15,6 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Russian (ru)
   m_GUID: 67e4cac38d4e6b646a87ff979cbd0f18
   m_SerializeEntries:
-  - m_GUID: 3254342a7079c6a498f33626189f065c
-    m_Address: Citations_ru
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ru
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4ead786eb2021fc4aa6674aa538919e2
     m_Address: Game_ru
     m_ReadOnly: 1
@@ -35,6 +29,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b85306b53f3a177449cbe81f58907ce8
     m_Address: ReasonsOfEntry_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2382a9a00da962469be367303ddfc2d
+    m_Address: Common_ru
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru
