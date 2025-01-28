@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Character;
 using Content.Person.Documents;
@@ -6,6 +7,9 @@ using Cysharp.Threading.Tasks;
 using Gameplay.GameCycle;
 using Gameplay.Items;
 using UI.Gameplay.Dialogs;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
+using Utility;
 using VContainer;
 
 namespace Content.GameStates
@@ -18,38 +22,42 @@ namespace Content.GameStates
         
         public async UniTask<IGameState> Handle(CancellationToken cancellation)
         {
+            StringTable dialogsTable = await LocalizationSettings.StringDatabase.GetTableAsync("Dialogs");
+            StringTable reasonsOfEntryTable = await LocalizationSettings.StringDatabase.GetTableAsync("ReasonsOfEntry");
+            
             // Welcome the person
             await m_DialogManager.ShowDialog(new[]
             {
-                new DialogMessage(DialogSpeaker.Inspector, "Dear, documents!"),
-                new DialogMessage(DialogSpeaker.Person, "Here you go."),
+                new DialogMessage(DialogSpeaker.Inspector, dialogsTable.GetEntry("greeting_request_documents").GetLocalizedString()),
+                new DialogMessage(DialogSpeaker.Person, dialogsTable.GetEntry("greeting_provide_documents").GetLocalizedString()),
             });
             
             // Drop all items from the person
             await m_Dropper.DropAll(m_Character.Person);
             
             // Ask the person about the purpose of the visit
+            Type reasonType = m_Character.Person.ReasonOfEntry.GetType();
+            string reasonKey = TextUtils.CamelToSnake(reasonType.Name.Replace("Reason", ""));
             await m_DialogManager.ShowDialog(new[]
             {
-                new DialogMessage(DialogSpeaker.Inspector, "Purpose of visit?"),
-                new DialogMessage(DialogSpeaker.Person, m_Character.Person.ReasonOfEntry.ToString()),
+                new DialogMessage(DialogSpeaker.Inspector, dialogsTable.GetEntry("ask_reason_of_entry").GetLocalizedString()),
+                new DialogMessage(DialogSpeaker.Person, reasonsOfEntryTable.GetEntry(reasonKey).GetLocalizedString()),
             });
 
             // Ask the person about the duration of the visit
-            if (m_Character.Person.ReasonOfEntry.GetType() != typeof(ResidenceReason))
+            if (reasonType != typeof(ResidenceReason))
             {
-                int days = m_Character.Person.GetDocument<EntryPermit>().Duration.Days;
-                
+                int days = m_Character.Person.GetDocument<EntryPermit>().Duration;
                 await m_DialogManager.ShowDialog(new[]
                 {
-                    new DialogMessage(DialogSpeaker.Inspector, "How long do you plan to stay?"),
-                    new DialogMessage(DialogSpeaker.Person, days + " days."),
+                    new DialogMessage(DialogSpeaker.Inspector, dialogsTable.GetEntry("ask_duration_of_stay").GetLocalizedString()),
+                    new DialogMessage(DialogSpeaker.Person, dialogsTable.GetEntry("person_duration_response").GetLocalizedString(days)),
                 });
             }
             
             await m_DialogManager.ShowDialog(new[]
             {
-                new DialogMessage(DialogSpeaker.Inspector, "Wait."),
+                new DialogMessage(DialogSpeaker.Inspector, dialogsTable.GetEntry("wait_inspecting").GetLocalizedString()),
             });
             
             return new InspectPersonState();

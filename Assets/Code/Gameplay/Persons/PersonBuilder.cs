@@ -19,15 +19,7 @@ namespace Gameplay.Persons
             m_ReasonOfEntryBuilder = reasonOfEntryBuilder;
             m_InconsistencyBuilder = inconsistencyBuilder;
             m_PersonNameService    = personNameService;
-            
-            m_ReasonsOfEntry = Assembly.GetAssembly(typeof(ReasonOfEntry))
-                                       .GetTypes()
-                                       .Where(type => type.IsSubclassOf(typeof(ReasonOfEntry)) && !type.IsAbstract)
-                                       .ToArray();
         }
-        
-        
-        private readonly Type[] m_ReasonsOfEntry;
         
         private readonly IReasonOfEntryBuilder m_ReasonOfEntryBuilder;
         private readonly IInconsistencyBuilder m_InconsistencyBuilder;
@@ -44,7 +36,7 @@ namespace Gameplay.Persons
             person.BirthDate = DateTime.Now.AddYears(-Random.Range(23, 50));
 
             // Generate random reason of entry
-            Type reasonType = m_ReasonsOfEntry.GetRandom();
+            Type reasonType = m_ReasonOfEntryBuilder.ReasonsOfEntry.GetRandom();
             ReasonOfEntry reason = m_ReasonOfEntryBuilder.Build(reasonType, person);
             
             // Generate random inconsistency

@@ -1,13 +1,31 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using Gameplay.Persons.Data;
 using Gameplay.Persons.Interfaces;
+using UnityEngine;
 using VContainer;
 
 namespace Gameplay.Persons
 {
     public class ReasonOfEntryBuilder : IReasonOfEntryBuilder
     {
-        [Inject] private IObjectResolver m_ObjectResolver;
+        public Type[] ReasonsOfEntry => m_ReasonsOfEntry;
+        
+        private readonly IObjectResolver m_ObjectResolver;
+        private readonly Type[] m_ReasonsOfEntry;
+        
+        public ReasonOfEntryBuilder(IObjectResolver objectResolver)
+        {
+            m_ObjectResolver = objectResolver;
+            
+            m_ReasonsOfEntry = Assembly.GetAssembly(typeof(ReasonOfEntry))
+                                       .GetTypes()
+                                       .Where(type => type.IsSubclassOf(typeof(ReasonOfEntry)) && !type.IsAbstract)
+                                       .ToArray();
+            
+            Debug.Log($"[ReasonOfEntryBuilder] Found {m_ReasonsOfEntry.Length} reasons of entry");
+        }
         
         public ReasonOfEntry Build(Type reasonType, Person person)
         {

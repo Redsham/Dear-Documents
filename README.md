@@ -7,6 +7,13 @@ In this project I use the following software:
 - Aseprite
 - JetBrains Rider
 
+## 🎨 Patterns
+In this project I use the following patterns:
+- Dependency Injection (DI)
+- Machine State (State)
+- Observer
+- And others
+
 ## 📡 Technologies
 In this project i use and practice the following technologies:
 - [LitMotion](https://github.com/AnnulusGames/LitMotion) - A simple and powerful tween library for Unity
@@ -20,4 +27,4 @@ To install and use this project, you need to:
    git clone https://github.com/Redsham/Dear-Documents
    ```
 2. Open the project in Unity
-3. Load the scene `MainScene` and press `Play`
+3. Load the scene `Gameplay` and press `Play`

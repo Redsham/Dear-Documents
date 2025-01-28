@@ -1,4 +1,3 @@
-using System;
 using Content.Person.Documents;
 using Cysharp.Threading.Tasks;
 using Gameplay.Items.Documents;
@@ -46,7 +45,7 @@ namespace Content.Items.Documents
             string reasonKey = TextUtils.CamelToSnake(Document.ReasonOfEntry.Name.Replace("Reason", ""));
             m_ReasonOfEntry.text = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("ReasonsOfEntry", reasonKey);
             
-            m_Duration.text = await m_LocalizedDuration.GetLocalizedStringAsync(Document.Duration.Days);
+            m_Duration.text = await m_LocalizedDuration.GetLocalizedStringAsync(Document.Duration);
             m_DateOfExpiry.text = await m_LocalizedDateFormat.GetLocalizedStringAsync(Document.DateOfExpiry);
         }
     }
